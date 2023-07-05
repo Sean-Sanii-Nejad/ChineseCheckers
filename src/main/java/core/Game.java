@@ -13,6 +13,7 @@ import io.humble.video.*;
 import io.humble.video.awt.MediaPictureConverter;
 import io.humble.video.awt.MediaPictureConverterFactory;
 import players.human.*;
+import players.rmhc.RMHCPlayer;
 import players.simple.RandomPlayer;
 import utilities.Pair;
 import utilities.Utils;
@@ -918,24 +919,19 @@ public class Game {
      * and then run this class.
      */
     public static void main(String[] args) {
-        String gameType = Utils.getArg(args, "game", "LoveLetter");
+        String gameType = Utils.getArg(args, "game", "ChineseCheckers");
         boolean useGUI = Utils.getArg(args, "gui", true);
-        int turnPause = Utils.getArg(args, "turnPause", 0);
+        int turnPause = Utils.getArg(args, "turnPause", 2);
         long seed = Utils.getArg(args, "seed", System.currentTimeMillis());
         ActionController ac = new ActionController();
 
         /* Set up players for the game */
         ArrayList<AbstractPlayer> players = new ArrayList<>();
-        players.add(new RandomPlayer());
-        players.add(new RandomPlayer());
-//        players.add(new MCTSPlayer());
-//        MCTSParams params1 = new MCTSParams();
-//        players.add(new MCTSPlayer(params1));
-//        players.add(new OSLAPlayer());
-//        players.add(new RMHCPlayer());
-//        players.add(new HumanGUIPlayer(ac));
+
+        players.add(new HumanConsolePlayer());
+        players.add(new HumanConsolePlayer());
 //        players.add(new HumanConsolePlayer());
-//        players.add(new FirstActionPlayer());
+
 
         /* Game parameter configuration. Set to null to ignore and use default parameters */
         String gameParams = null;
@@ -951,5 +947,16 @@ public class Game {
 //        runMany(games, players, 100L, 100, false, false, null, turnPause);
 //        runMany(new ArrayList<GameType>() {{add(Uno);}}, players, 100L, 100, false, false, null, turnPause);
     }
-
 }
+
+
+//        players.add(new HumanConsolePlayer());
+//        players.add(new FirstActionPlayer());
+//        players.add(new RandomPlayer());
+//        players.add(new RandomPlayer());
+//        players.add(new MCTSPlayer());
+//        MCTSParams params1 = new MCTSParams();
+//        players.add(new MCTSPlayer(params1));
+//        players.add(new OSLAPlayer());
+//        players.add(new RMHCPlayer());
+//        players.add(new HumanGUIPlayer(ac));

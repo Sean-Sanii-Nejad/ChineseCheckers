@@ -14,8 +14,12 @@ public class DBForwardModel extends StandardForwardModel {
 
     @Override
     protected void _setup(AbstractGameState firstState) {
+
+
         DBGameState dbgs = (DBGameState) firstState;
         DBParameters dbp = (DBParameters) firstState.getGameParameters();
+
+
 
         dbgs.lastActionScored = false;
         // Generate edge to cell mapping and all cell objects with appropriate constructor
@@ -48,6 +52,7 @@ public class DBForwardModel extends StandardForwardModel {
         }
         // Initialise other variables
         dbgs.nCellsPerPlayer = new int[dbgs.getNPlayers()];
+        System.out.println(dbgs);
     }
 
     @Override

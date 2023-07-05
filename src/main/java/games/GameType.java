@@ -10,6 +10,10 @@ import games.cantstop.*;
 import games.cantstop.gui.CantStopGUIManager;
 import games.catan.*;
 import games.catan.gui.CatanGUI;
+import games.chinesecheckers.CCForwardModel;
+import games.chinesecheckers.gui.CCGUIManager;
+import games.chinesecheckers.CCGameState;
+import games.chinesecheckers.CCParameters;
 import games.coltexpress.*;
 import games.coltexpress.gui.ColtExpressGUIManager;
 import games.connect4.*;
@@ -164,7 +168,13 @@ public enum GameType {
     CantStop(2, 4,
             Arrays.asList(Dice, Abstract),
             Collections.singletonList(PushYourLuck),
-            CantStopGameState.class, CantStopForwardModel.class, CantStopParameters.class, CantStopGUIManager.class);
+            CantStopGameState.class, CantStopForwardModel.class, CantStopParameters.class, CantStopGUIManager.class),
+
+    ChineseCheckers(2, 6,
+            Arrays.asList(Simple, Abstract),
+            Arrays.asList(HexagonGrid),
+            CCGameState.class, CCForwardModel.class, CCParameters.class, CCGUIManager.class);
+
 
     // Core classes where the game is defined
     final Class<? extends AbstractGameState> gameStateClass;

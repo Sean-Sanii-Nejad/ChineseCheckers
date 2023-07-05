@@ -2,6 +2,7 @@ package core.components;
 
 import core.CoreConstants;
 import core.properties.Property;
+import games.chinesecheckers.components.Peg;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -25,7 +26,7 @@ public class BoardNode extends Component {
         this(-1, "");
     }
 
-    BoardNode(int maxNeighbours, String name, int ID) {
+    protected BoardNode(int maxNeighbours, String name, int ID) {
         super(CoreConstants.ComponentType.BOARD_NODE, name, ID);
         this.maxNeighbours = maxNeighbours;
         this.neighbours = new HashSet<>();
