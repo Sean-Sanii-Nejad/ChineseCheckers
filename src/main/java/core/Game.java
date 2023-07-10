@@ -14,6 +14,7 @@ import io.humble.video.*;
 import io.humble.video.awt.MediaPictureConverter;
 import io.humble.video.awt.MediaPictureConverterFactory;
 import players.human.*;
+import players.mcts.MCTSPlayer;
 import players.rmhc.RMHCPlayer;
 import players.simple.RandomPlayer;
 import utilities.Pair;
@@ -935,9 +936,13 @@ public class Game {
         /* Set up players for the game */
         ArrayList<AbstractPlayer> players = new ArrayList<>();
 
-        players.add(new HumanConsolePlayer());
-        players.add(new HumanConsolePlayer());
+//        players.add(new HumanGUIPlayer(new ActionController()));
+//        players.add(new MCTSPlayer());
+        players.add(new RandomPlayer());
+        players.add(new RandomPlayer());
 //        players.add(new HumanConsolePlayer());
+
+//        players.add(new RandomPlayer());
 
 
         /* Game parameter configuration. Set to null to ignore and use default parameters */

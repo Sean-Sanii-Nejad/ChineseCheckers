@@ -7,6 +7,8 @@ import games.chinesecheckers.components.CCNode;
 import games.chinesecheckers.components.Peg;
 import games.sushigo.actions.ChooseCard;
 
+import java.util.Objects;
+
 public class MovePeg extends AbstractAction {
 
     CCNode from;
@@ -14,6 +16,7 @@ public class MovePeg extends AbstractAction {
 
     public MovePeg(CCNode from, CCNode to)
     {
+        //System.out.println("Peg on: " + from + " moved to " + to);
         this.from = from;
         this.to = to;
     }
@@ -24,8 +27,6 @@ public class MovePeg extends AbstractAction {
 
         ((CCNode) state.getStarBoard().getBoardNodes().get(to.getID())).setOccupiedPeg(from.getOccupiedPeg());
         ((CCNode) state.getStarBoard().getBoardNodes().get(from.getID())).setOccupiedPeg(null);
-
-
 
         return true;
     }
@@ -45,7 +46,7 @@ public class MovePeg extends AbstractAction {
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        return Objects.hash(from, to);
     }
 
     @Override

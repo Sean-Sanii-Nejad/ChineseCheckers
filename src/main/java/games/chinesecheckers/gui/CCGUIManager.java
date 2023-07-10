@@ -28,12 +28,11 @@ public class CCGUIManager extends AbstractGUIManager {
         if (game == null) return;
 
         // TODO: set up GUI components and add to `parent`
-
         CCGameState gameState = (CCGameState) game.getGameState();
         view = new CCGraphView(gameState.getStarBoard());
 
         this.width = 1000;
-        this.height = 250;
+        this.height = 450;
 
         JPanel infoPanel = createGameStateInfoPanel("ChineseCheckers", gameState, width, defaultInfoPanelHeight);
         JComponent actionPanel = createActionPanel(new IScreenHighlight[]{view},
@@ -41,14 +40,15 @@ public class CCGUIManager extends AbstractGUIManager {
 
         // Debug Colours
         infoPanel.setBackground(Color.green);
+        actionPanel.setBackground(Color.red);
 
-
-
+        view.setForeground(Color.cyan);
 
         parent.setLayout(new BorderLayout());
-        parent.add(view, BorderLayout.CENTER);
+
         parent.add(infoPanel, BorderLayout.NORTH);
         parent.add(actionPanel, BorderLayout.SOUTH);
+        parent.add(view, BorderLayout.CENTER);
         parent.setPreferredSize(new Dimension(width, height + defaultActionPanelHeight + defaultInfoPanelHeight + defaultCardHeight + 20));
         parent.revalidate();
         parent.setVisible(true);

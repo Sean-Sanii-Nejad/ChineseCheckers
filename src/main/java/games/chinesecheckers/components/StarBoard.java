@@ -15,5 +15,11 @@ public class StarBoard extends GraphBoard  {
     private int x;  // Width of the board
     private int y;  // Height of the board
 
-    
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

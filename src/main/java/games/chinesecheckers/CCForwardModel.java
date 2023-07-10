@@ -36,8 +36,6 @@ public class CCForwardModel extends StandardForwardModel {
         }
 
         loadNodeBaseColours(state);
-        System.out.println(((CCNode)state.getStarBoard().getBoardNodes().get(90)).getBaseColour());
-        System.out.println(((CCNode)state.getStarBoard().getBoardNodes().get(90)).isNodeOccupied());
 //        if(state.getNPlayers() == 3){
 //            loadPegs3Player(state);
 //        }
@@ -90,14 +88,13 @@ public class CCForwardModel extends StandardForwardModel {
         List<AbstractAction> actions = new ArrayList<>();
 
         if(!checkWinConditionPurple(state)){
-            //endPlayerTurn(currentState);
+            endPlayerTurn(currentState);
         }
         else {
             currentState.setPlayerResult(CoreConstants.GameResult.WIN_GAME, Peg.Colour2.purple.ordinal());
             currentState.setPlayerResult(CoreConstants.GameResult.LOSE_GAME, Peg.Colour2.red.ordinal());
             currentState.setGameStatus(CoreConstants.GameResult.GAME_END);
             endGame(state);
-
         }
     }
 
@@ -407,7 +404,7 @@ public class CCForwardModel extends StandardForwardModel {
 
     private void loadPegsRed(CCGameState state){
         if(state.getNPlayers() == 2){
-            for(int i = 112; i <= 120; i++){
+            for(int i = 111; i <= 120; i++){
                 ((CCNode) state.starBoard.getBoardNodes().get(i)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(i)));
             }
         }
@@ -645,19 +642,19 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(19).addNeighbour(state.starBoard.getBoardNodes().get(31),3);
         state.starBoard.getBoardNodes().get(19).addNeighbour(state.starBoard.getBoardNodes().get(18),4);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(20)).setCoordinates(9, 4);
+        ((CCNode)state.starBoard.getBoardNodes().get(20)).setCoordinates(10, 4);
         state.starBoard.getBoardNodes().get(20).addNeighbour(state.starBoard.getBoardNodes().get(21),1);
         state.starBoard.getBoardNodes().get(20).addNeighbour(state.starBoard.getBoardNodes().get(33),2);
         state.starBoard.getBoardNodes().get(20).addNeighbour(state.starBoard.getBoardNodes().get(32),3);
         state.starBoard.getBoardNodes().get(20).addNeighbour(state.starBoard.getBoardNodes().get(19),4);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(21)).setCoordinates(10, 4);
+        ((CCNode)state.starBoard.getBoardNodes().get(21)).setCoordinates(11, 4);
         state.starBoard.getBoardNodes().get(21).addNeighbour(state.starBoard.getBoardNodes().get(22),1);
         state.starBoard.getBoardNodes().get(21).addNeighbour(state.starBoard.getBoardNodes().get(34),2);
         state.starBoard.getBoardNodes().get(21).addNeighbour(state.starBoard.getBoardNodes().get(33),3);
         state.starBoard.getBoardNodes().get(21).addNeighbour(state.starBoard.getBoardNodes().get(20),4);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(22)).setCoordinates(11, 4);
+        ((CCNode)state.starBoard.getBoardNodes().get(22)).setCoordinates(12, 4);
         state.starBoard.getBoardNodes().get(22).addNeighbour(state.starBoard.getBoardNodes().get(34),3);
         state.starBoard.getBoardNodes().get(22).addNeighbour(state.starBoard.getBoardNodes().get(21),4);
 
@@ -983,13 +980,13 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(64).addNeighbour(state.starBoard.getBoardNodes().get(63),4);
         state.starBoard.getBoardNodes().get(64).addNeighbour(state.starBoard.getBoardNodes().get(54),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(65)).setCoordinates(1, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(65)).setCoordinates(1, 9);
         state.starBoard.getBoardNodes().get(65).addNeighbour(state.starBoard.getBoardNodes().get(56),0);
         state.starBoard.getBoardNodes().get(65).addNeighbour(state.starBoard.getBoardNodes().get(66),1);
         state.starBoard.getBoardNodes().get(65).addNeighbour(state.starBoard.getBoardNodes().get(76),2);
         state.starBoard.getBoardNodes().get(65).addNeighbour(state.starBoard.getBoardNodes().get(75),3);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(66)).setCoordinates(2, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(66)).setCoordinates(2, 9);
         state.starBoard.getBoardNodes().get(66).addNeighbour(state.starBoard.getBoardNodes().get(57),0);
         state.starBoard.getBoardNodes().get(66).addNeighbour(state.starBoard.getBoardNodes().get(67),1);
         state.starBoard.getBoardNodes().get(66).addNeighbour(state.starBoard.getBoardNodes().get(77),2);
@@ -997,7 +994,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(66).addNeighbour(state.starBoard.getBoardNodes().get(65),4);
         state.starBoard.getBoardNodes().get(66).addNeighbour(state.starBoard.getBoardNodes().get(56),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(67)).setCoordinates(3, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(67)).setCoordinates(3, 9);
         state.starBoard.getBoardNodes().get(67).addNeighbour(state.starBoard.getBoardNodes().get(58),0);
         state.starBoard.getBoardNodes().get(67).addNeighbour(state.starBoard.getBoardNodes().get(68),1);
         state.starBoard.getBoardNodes().get(67).addNeighbour(state.starBoard.getBoardNodes().get(78),2);
@@ -1005,7 +1002,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(67).addNeighbour(state.starBoard.getBoardNodes().get(66),4);
         state.starBoard.getBoardNodes().get(67).addNeighbour(state.starBoard.getBoardNodes().get(57),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(68)).setCoordinates(4, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(68)).setCoordinates(4, 9);
         state.starBoard.getBoardNodes().get(68).addNeighbour(state.starBoard.getBoardNodes().get(59),0);
         state.starBoard.getBoardNodes().get(68).addNeighbour(state.starBoard.getBoardNodes().get(69),1);
         state.starBoard.getBoardNodes().get(68).addNeighbour(state.starBoard.getBoardNodes().get(79),2);
@@ -1013,7 +1010,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(68).addNeighbour(state.starBoard.getBoardNodes().get(67),4);
         state.starBoard.getBoardNodes().get(68).addNeighbour(state.starBoard.getBoardNodes().get(58),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(69)).setCoordinates(5, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(69)).setCoordinates(5, 9);
         state.starBoard.getBoardNodes().get(69).addNeighbour(state.starBoard.getBoardNodes().get(60),0);
         state.starBoard.getBoardNodes().get(69).addNeighbour(state.starBoard.getBoardNodes().get(70),1);
         state.starBoard.getBoardNodes().get(69).addNeighbour(state.starBoard.getBoardNodes().get(80),2);
@@ -1021,7 +1018,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(69).addNeighbour(state.starBoard.getBoardNodes().get(68),4);
         state.starBoard.getBoardNodes().get(69).addNeighbour(state.starBoard.getBoardNodes().get(59),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(70)).setCoordinates(6, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(70)).setCoordinates(6, 9);
         state.starBoard.getBoardNodes().get(70).addNeighbour(state.starBoard.getBoardNodes().get(61),0);
         state.starBoard.getBoardNodes().get(70).addNeighbour(state.starBoard.getBoardNodes().get(71),1);
         state.starBoard.getBoardNodes().get(70).addNeighbour(state.starBoard.getBoardNodes().get(81),2);
@@ -1029,7 +1026,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(70).addNeighbour(state.starBoard.getBoardNodes().get(69),4);
         state.starBoard.getBoardNodes().get(70).addNeighbour(state.starBoard.getBoardNodes().get(60),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(71)).setCoordinates(7, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(71)).setCoordinates(7, 9);
         state.starBoard.getBoardNodes().get(71).addNeighbour(state.starBoard.getBoardNodes().get(62),0);
         state.starBoard.getBoardNodes().get(71).addNeighbour(state.starBoard.getBoardNodes().get(72),1);
         state.starBoard.getBoardNodes().get(71).addNeighbour(state.starBoard.getBoardNodes().get(82),2);
@@ -1037,7 +1034,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(71).addNeighbour(state.starBoard.getBoardNodes().get(70),4);
         state.starBoard.getBoardNodes().get(71).addNeighbour(state.starBoard.getBoardNodes().get(61),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(72)).setCoordinates(8, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(72)).setCoordinates(8, 9);
         state.starBoard.getBoardNodes().get(72).addNeighbour(state.starBoard.getBoardNodes().get(63),0);
         state.starBoard.getBoardNodes().get(72).addNeighbour(state.starBoard.getBoardNodes().get(73),1);
         state.starBoard.getBoardNodes().get(72).addNeighbour(state.starBoard.getBoardNodes().get(83),2);
@@ -1045,7 +1042,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(72).addNeighbour(state.starBoard.getBoardNodes().get(71),4);
         state.starBoard.getBoardNodes().get(72).addNeighbour(state.starBoard.getBoardNodes().get(62),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(73)).setCoordinates(8, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(73)).setCoordinates(9, 9);
         state.starBoard.getBoardNodes().get(73).addNeighbour(state.starBoard.getBoardNodes().get(64),0);
         state.starBoard.getBoardNodes().get(73).addNeighbour(state.starBoard.getBoardNodes().get(74),1);
         state.starBoard.getBoardNodes().get(73).addNeighbour(state.starBoard.getBoardNodes().get(84),2);
@@ -1053,19 +1050,19 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(73).addNeighbour(state.starBoard.getBoardNodes().get(72),4);
         state.starBoard.getBoardNodes().get(73).addNeighbour(state.starBoard.getBoardNodes().get(63),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(74)).setCoordinates(9, 10);
+        ((CCNode)state.starBoard.getBoardNodes().get(74)).setCoordinates(10, 9);
         state.starBoard.getBoardNodes().get(74).addNeighbour(state.starBoard.getBoardNodes().get(85),2);
         state.starBoard.getBoardNodes().get(74).addNeighbour(state.starBoard.getBoardNodes().get(84),3);
         state.starBoard.getBoardNodes().get(74).addNeighbour(state.starBoard.getBoardNodes().get(73),4);
         state.starBoard.getBoardNodes().get(74).addNeighbour(state.starBoard.getBoardNodes().get(64),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(75)).setCoordinates(1, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(75)).setCoordinates(1, 10);
         state.starBoard.getBoardNodes().get(75).addNeighbour(state.starBoard.getBoardNodes().get(65),0);
         state.starBoard.getBoardNodes().get(75).addNeighbour(state.starBoard.getBoardNodes().get(76),1);
         state.starBoard.getBoardNodes().get(75).addNeighbour(state.starBoard.getBoardNodes().get(87),2);
         state.starBoard.getBoardNodes().get(75).addNeighbour(state.starBoard.getBoardNodes().get(86),3);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(76)).setCoordinates(2, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(76)).setCoordinates(2, 10);
         state.starBoard.getBoardNodes().get(76).addNeighbour(state.starBoard.getBoardNodes().get(66),0);
         state.starBoard.getBoardNodes().get(76).addNeighbour(state.starBoard.getBoardNodes().get(77),1);
         state.starBoard.getBoardNodes().get(76).addNeighbour(state.starBoard.getBoardNodes().get(88),2);
@@ -1073,7 +1070,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(76).addNeighbour(state.starBoard.getBoardNodes().get(75),4);
         state.starBoard.getBoardNodes().get(76).addNeighbour(state.starBoard.getBoardNodes().get(65),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(77)).setCoordinates(3, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(77)).setCoordinates(3, 10);
         state.starBoard.getBoardNodes().get(77).addNeighbour(state.starBoard.getBoardNodes().get(67),0);
         state.starBoard.getBoardNodes().get(77).addNeighbour(state.starBoard.getBoardNodes().get(78),1);
         state.starBoard.getBoardNodes().get(77).addNeighbour(state.starBoard.getBoardNodes().get(89),2);
@@ -1081,7 +1078,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(77).addNeighbour(state.starBoard.getBoardNodes().get(76),4);
         state.starBoard.getBoardNodes().get(77).addNeighbour(state.starBoard.getBoardNodes().get(66),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(78)).setCoordinates(3, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(78)).setCoordinates(4, 10);
         state.starBoard.getBoardNodes().get(78).addNeighbour(state.starBoard.getBoardNodes().get(68),0);
         state.starBoard.getBoardNodes().get(78).addNeighbour(state.starBoard.getBoardNodes().get(79),1);
         state.starBoard.getBoardNodes().get(78).addNeighbour(state.starBoard.getBoardNodes().get(90),2);
@@ -1089,7 +1086,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(78).addNeighbour(state.starBoard.getBoardNodes().get(77),4);
         state.starBoard.getBoardNodes().get(78).addNeighbour(state.starBoard.getBoardNodes().get(67),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(79)).setCoordinates(4, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(79)).setCoordinates(5, 10);
         state.starBoard.getBoardNodes().get(79).addNeighbour(state.starBoard.getBoardNodes().get(69),0);
         state.starBoard.getBoardNodes().get(79).addNeighbour(state.starBoard.getBoardNodes().get(80),1);
         state.starBoard.getBoardNodes().get(79).addNeighbour(state.starBoard.getBoardNodes().get(91),2);
@@ -1097,7 +1094,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(79).addNeighbour(state.starBoard.getBoardNodes().get(78),4);
         state.starBoard.getBoardNodes().get(79).addNeighbour(state.starBoard.getBoardNodes().get(68),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(80)).setCoordinates(5, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(80)).setCoordinates(6, 10);
         state.starBoard.getBoardNodes().get(80).addNeighbour(state.starBoard.getBoardNodes().get(70),0);
         state.starBoard.getBoardNodes().get(80).addNeighbour(state.starBoard.getBoardNodes().get(81),1);
         state.starBoard.getBoardNodes().get(80).addNeighbour(state.starBoard.getBoardNodes().get(92),2);
@@ -1105,7 +1102,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(80).addNeighbour(state.starBoard.getBoardNodes().get(79),4);
         state.starBoard.getBoardNodes().get(80).addNeighbour(state.starBoard.getBoardNodes().get(69),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(81)).setCoordinates(6, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(81)).setCoordinates(7, 10);
         state.starBoard.getBoardNodes().get(81).addNeighbour(state.starBoard.getBoardNodes().get(71),0);
         state.starBoard.getBoardNodes().get(81).addNeighbour(state.starBoard.getBoardNodes().get(82),1);
         state.starBoard.getBoardNodes().get(81).addNeighbour(state.starBoard.getBoardNodes().get(93),2);
@@ -1113,7 +1110,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(81).addNeighbour(state.starBoard.getBoardNodes().get(80),4);
         state.starBoard.getBoardNodes().get(81).addNeighbour(state.starBoard.getBoardNodes().get(70),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(82)).setCoordinates(7, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(82)).setCoordinates(8, 10);
         state.starBoard.getBoardNodes().get(82).addNeighbour(state.starBoard.getBoardNodes().get(72),0);
         state.starBoard.getBoardNodes().get(82).addNeighbour(state.starBoard.getBoardNodes().get(83),1);
         state.starBoard.getBoardNodes().get(82).addNeighbour(state.starBoard.getBoardNodes().get(94),2);
@@ -1121,7 +1118,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(82).addNeighbour(state.starBoard.getBoardNodes().get(81),4);
         state.starBoard.getBoardNodes().get(82).addNeighbour(state.starBoard.getBoardNodes().get(71),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(83)).setCoordinates(8, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(83)).setCoordinates(9, 10);
         state.starBoard.getBoardNodes().get(83).addNeighbour(state.starBoard.getBoardNodes().get(73),0);
         state.starBoard.getBoardNodes().get(83).addNeighbour(state.starBoard.getBoardNodes().get(84),1);
         state.starBoard.getBoardNodes().get(83).addNeighbour(state.starBoard.getBoardNodes().get(95),2);
@@ -1129,7 +1126,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(83).addNeighbour(state.starBoard.getBoardNodes().get(83),4);
         state.starBoard.getBoardNodes().get(83).addNeighbour(state.starBoard.getBoardNodes().get(72),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(84)).setCoordinates(9, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(84)).setCoordinates(10, 10);
         state.starBoard.getBoardNodes().get(84).addNeighbour(state.starBoard.getBoardNodes().get(74),0);
         state.starBoard.getBoardNodes().get(84).addNeighbour(state.starBoard.getBoardNodes().get(85),1);
         state.starBoard.getBoardNodes().get(84).addNeighbour(state.starBoard.getBoardNodes().get(96),2);
@@ -1137,19 +1134,19 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(84).addNeighbour(state.starBoard.getBoardNodes().get(83),4);
         state.starBoard.getBoardNodes().get(84).addNeighbour(state.starBoard.getBoardNodes().get(73),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(85)).setCoordinates(10, 11);
+        ((CCNode)state.starBoard.getBoardNodes().get(85)).setCoordinates(11, 10);
         state.starBoard.getBoardNodes().get(85).addNeighbour(state.starBoard.getBoardNodes().get(97),2);
         state.starBoard.getBoardNodes().get(85).addNeighbour(state.starBoard.getBoardNodes().get(96),3);
         state.starBoard.getBoardNodes().get(85).addNeighbour(state.starBoard.getBoardNodes().get(84),4);
         state.starBoard.getBoardNodes().get(85).addNeighbour(state.starBoard.getBoardNodes().get(74),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(86)).setCoordinates(0, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(86)).setCoordinates(0, 11);
         state.starBoard.getBoardNodes().get(86).addNeighbour(state.starBoard.getBoardNodes().get(75),0);
         state.starBoard.getBoardNodes().get(86).addNeighbour(state.starBoard.getBoardNodes().get(87),1);
         state.starBoard.getBoardNodes().get(86).addNeighbour(state.starBoard.getBoardNodes().get(99),2);
         state.starBoard.getBoardNodes().get(86).addNeighbour(state.starBoard.getBoardNodes().get(98),3);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(87)).setCoordinates(1, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(87)).setCoordinates(1, 11);
         state.starBoard.getBoardNodes().get(87).addNeighbour(state.starBoard.getBoardNodes().get(75),0);
         state.starBoard.getBoardNodes().get(87).addNeighbour(state.starBoard.getBoardNodes().get(87),1);
         state.starBoard.getBoardNodes().get(87).addNeighbour(state.starBoard.getBoardNodes().get(99),2);
@@ -1157,7 +1154,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(87).addNeighbour(state.starBoard.getBoardNodes().get(99),4);
         state.starBoard.getBoardNodes().get(87).addNeighbour(state.starBoard.getBoardNodes().get(98),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(88)).setCoordinates(2, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(88)).setCoordinates(2, 11);
         state.starBoard.getBoardNodes().get(88).addNeighbour(state.starBoard.getBoardNodes().get(77),0);
         state.starBoard.getBoardNodes().get(88).addNeighbour(state.starBoard.getBoardNodes().get(89),1);
         state.starBoard.getBoardNodes().get(88).addNeighbour(state.starBoard.getBoardNodes().get(101),2);
@@ -1165,7 +1162,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(88).addNeighbour(state.starBoard.getBoardNodes().get(87),4);
         state.starBoard.getBoardNodes().get(88).addNeighbour(state.starBoard.getBoardNodes().get(76),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(89)).setCoordinates(3, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(89)).setCoordinates(3, 11);
         state.starBoard.getBoardNodes().get(89).addNeighbour(state.starBoard.getBoardNodes().get(78),0);
         state.starBoard.getBoardNodes().get(89).addNeighbour(state.starBoard.getBoardNodes().get(90),1);
         state.starBoard.getBoardNodes().get(89).addNeighbour(state.starBoard.getBoardNodes().get(102),2);
@@ -1173,7 +1170,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(89).addNeighbour(state.starBoard.getBoardNodes().get(88),4);
         state.starBoard.getBoardNodes().get(89).addNeighbour(state.starBoard.getBoardNodes().get(77),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(90)).setCoordinates(4, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(90)).setCoordinates(4, 11);
         state.starBoard.getBoardNodes().get(90).addNeighbour(state.starBoard.getBoardNodes().get(79),0);
         state.starBoard.getBoardNodes().get(90).addNeighbour(state.starBoard.getBoardNodes().get(91),1);
         state.starBoard.getBoardNodes().get(90).addNeighbour(state.starBoard.getBoardNodes().get(103),2);
@@ -1181,7 +1178,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(90).addNeighbour(state.starBoard.getBoardNodes().get(89),4);
         state.starBoard.getBoardNodes().get(90).addNeighbour(state.starBoard.getBoardNodes().get(78),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(91)).setCoordinates(5, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(91)).setCoordinates(5, 11);
         state.starBoard.getBoardNodes().get(91).addNeighbour(state.starBoard.getBoardNodes().get(80),0);
         state.starBoard.getBoardNodes().get(91).addNeighbour(state.starBoard.getBoardNodes().get(92),1);
         state.starBoard.getBoardNodes().get(91).addNeighbour(state.starBoard.getBoardNodes().get(104),2);
@@ -1189,7 +1186,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(91).addNeighbour(state.starBoard.getBoardNodes().get(90),4);
         state.starBoard.getBoardNodes().get(91).addNeighbour(state.starBoard.getBoardNodes().get(79),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(92)).setCoordinates(6, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(92)).setCoordinates(6, 11);
         state.starBoard.getBoardNodes().get(92).addNeighbour(state.starBoard.getBoardNodes().get(81),0);
         state.starBoard.getBoardNodes().get(92).addNeighbour(state.starBoard.getBoardNodes().get(93),1);
         state.starBoard.getBoardNodes().get(92).addNeighbour(state.starBoard.getBoardNodes().get(105),2);
@@ -1197,7 +1194,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(92).addNeighbour(state.starBoard.getBoardNodes().get(91),4);
         state.starBoard.getBoardNodes().get(92).addNeighbour(state.starBoard.getBoardNodes().get(80),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(93)).setCoordinates(7, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(93)).setCoordinates(7, 11);
         state.starBoard.getBoardNodes().get(93).addNeighbour(state.starBoard.getBoardNodes().get(82),0);
         state.starBoard.getBoardNodes().get(93).addNeighbour(state.starBoard.getBoardNodes().get(94),1);
         state.starBoard.getBoardNodes().get(93).addNeighbour(state.starBoard.getBoardNodes().get(106),2);
@@ -1205,7 +1202,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(93).addNeighbour(state.starBoard.getBoardNodes().get(92),4);
         state.starBoard.getBoardNodes().get(93).addNeighbour(state.starBoard.getBoardNodes().get(81),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(94)).setCoordinates(8, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(94)).setCoordinates(8, 11);
         state.starBoard.getBoardNodes().get(94).addNeighbour(state.starBoard.getBoardNodes().get(83),0);
         state.starBoard.getBoardNodes().get(94).addNeighbour(state.starBoard.getBoardNodes().get(95),1);
         state.starBoard.getBoardNodes().get(94).addNeighbour(state.starBoard.getBoardNodes().get(107),2);
@@ -1213,7 +1210,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(94).addNeighbour(state.starBoard.getBoardNodes().get(93),4);
         state.starBoard.getBoardNodes().get(94).addNeighbour(state.starBoard.getBoardNodes().get(82),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(95)).setCoordinates(9, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(95)).setCoordinates(9, 11);
         state.starBoard.getBoardNodes().get(95).addNeighbour(state.starBoard.getBoardNodes().get(84),0);
         state.starBoard.getBoardNodes().get(95).addNeighbour(state.starBoard.getBoardNodes().get(96),1);
         state.starBoard.getBoardNodes().get(95).addNeighbour(state.starBoard.getBoardNodes().get(108),2);
@@ -1221,7 +1218,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(95).addNeighbour(state.starBoard.getBoardNodes().get(94),4);
         state.starBoard.getBoardNodes().get(95).addNeighbour(state.starBoard.getBoardNodes().get(83),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(96)).setCoordinates(10, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(96)).setCoordinates(10, 11);
         state.starBoard.getBoardNodes().get(96).addNeighbour(state.starBoard.getBoardNodes().get(85),0);
         state.starBoard.getBoardNodes().get(96).addNeighbour(state.starBoard.getBoardNodes().get(97),1);
         state.starBoard.getBoardNodes().get(96).addNeighbour(state.starBoard.getBoardNodes().get(109),2);
@@ -1229,42 +1226,42 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(96).addNeighbour(state.starBoard.getBoardNodes().get(95),4);
         state.starBoard.getBoardNodes().get(96).addNeighbour(state.starBoard.getBoardNodes().get(84),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(97)).setCoordinates(11, 12);
+        ((CCNode)state.starBoard.getBoardNodes().get(97)).setCoordinates(11, 11);
         state.starBoard.getBoardNodes().get(97).addNeighbour(state.starBoard.getBoardNodes().get(110),2);
         state.starBoard.getBoardNodes().get(97).addNeighbour(state.starBoard.getBoardNodes().get(109),3);
         state.starBoard.getBoardNodes().get(97).addNeighbour(state.starBoard.getBoardNodes().get(96),4);
         state.starBoard.getBoardNodes().get(97).addNeighbour(state.starBoard.getBoardNodes().get(85),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(98)).setCoordinates(0, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(98)).setCoordinates(0, 12);
         state.starBoard.getBoardNodes().get(98).addNeighbour(state.starBoard.getBoardNodes().get(86),0);
         state.starBoard.getBoardNodes().get(98).addNeighbour(state.starBoard.getBoardNodes().get(99),1);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(99)).setCoordinates(1, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(99)).setCoordinates(1, 12);
         state.starBoard.getBoardNodes().get(99).addNeighbour(state.starBoard.getBoardNodes().get(87),0);
         state.starBoard.getBoardNodes().get(99).addNeighbour(state.starBoard.getBoardNodes().get(100),1);
         state.starBoard.getBoardNodes().get(99).addNeighbour(state.starBoard.getBoardNodes().get(98),4);
         state.starBoard.getBoardNodes().get(99).addNeighbour(state.starBoard.getBoardNodes().get(86),5);
 
-        ((CCNode)state.starBoard.getBoardNodes().get(100)).setCoordinates(2, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(100)).setCoordinates(2, 12);
         state.starBoard.getBoardNodes().get(100).addNeighbour(state.starBoard.getBoardNodes().get(88),0);
         state.starBoard.getBoardNodes().get(100).addNeighbour(state.starBoard.getBoardNodes().get(101),1);
         state.starBoard.getBoardNodes().get(100).addNeighbour(state.starBoard.getBoardNodes().get(99),4);
         state.starBoard.getBoardNodes().get(100).addNeighbour(state.starBoard.getBoardNodes().get(87),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(101)).setCoordinates(3, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(101)).setCoordinates(3, 12);
         state.starBoard.getBoardNodes().get(101).addNeighbour(state.starBoard.getBoardNodes().get(89),0);
         state.starBoard.getBoardNodes().get(101).addNeighbour(state.starBoard.getBoardNodes().get(102),1);
         state.starBoard.getBoardNodes().get(101).addNeighbour(state.starBoard.getBoardNodes().get(100),4);
         state.starBoard.getBoardNodes().get(101).addNeighbour(state.starBoard.getBoardNodes().get(88),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(102)).setCoordinates(4, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(102)).setCoordinates(4, 12);
         state.starBoard.getBoardNodes().get(102).addNeighbour(state.starBoard.getBoardNodes().get(90),0);
         state.starBoard.getBoardNodes().get(102).addNeighbour(state.starBoard.getBoardNodes().get(103),1);
         state.starBoard.getBoardNodes().get(102).addNeighbour(state.starBoard.getBoardNodes().get(111),2);
         state.starBoard.getBoardNodes().get(102).addNeighbour(state.starBoard.getBoardNodes().get(101),4);
         state.starBoard.getBoardNodes().get(102).addNeighbour(state.starBoard.getBoardNodes().get(89),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(103)).setCoordinates(5, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(103)).setCoordinates(5, 12);
         state.starBoard.getBoardNodes().get(103).addNeighbour(state.starBoard.getBoardNodes().get(91),0);
         state.starBoard.getBoardNodes().get(103).addNeighbour(state.starBoard.getBoardNodes().get(104),1);
         state.starBoard.getBoardNodes().get(103).addNeighbour(state.starBoard.getBoardNodes().get(112),2);
@@ -1272,7 +1269,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(103).addNeighbour(state.starBoard.getBoardNodes().get(102),4);
         state.starBoard.getBoardNodes().get(103).addNeighbour(state.starBoard.getBoardNodes().get(90),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(104)).setCoordinates(6, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(104)).setCoordinates(6, 12);
         state.starBoard.getBoardNodes().get(104).addNeighbour(state.starBoard.getBoardNodes().get(92),0);
         state.starBoard.getBoardNodes().get(104).addNeighbour(state.starBoard.getBoardNodes().get(105),1);
         state.starBoard.getBoardNodes().get(104).addNeighbour(state.starBoard.getBoardNodes().get(113),2);
@@ -1280,7 +1277,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(104).addNeighbour(state.starBoard.getBoardNodes().get(103),4);
         state.starBoard.getBoardNodes().get(104).addNeighbour(state.starBoard.getBoardNodes().get(91),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(105)).setCoordinates(7, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(105)).setCoordinates(7, 12);
         state.starBoard.getBoardNodes().get(105).addNeighbour(state.starBoard.getBoardNodes().get(93),0);
         state.starBoard.getBoardNodes().get(105).addNeighbour(state.starBoard.getBoardNodes().get(106),1);
         state.starBoard.getBoardNodes().get(105).addNeighbour(state.starBoard.getBoardNodes().get(114),2);
@@ -1288,42 +1285,42 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(105).addNeighbour(state.starBoard.getBoardNodes().get(104),4);
         state.starBoard.getBoardNodes().get(105).addNeighbour(state.starBoard.getBoardNodes().get(92),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(106)).setCoordinates(8, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(106)).setCoordinates(8, 12);
         state.starBoard.getBoardNodes().get(106).addNeighbour(state.starBoard.getBoardNodes().get(94),0);
         state.starBoard.getBoardNodes().get(106).addNeighbour(state.starBoard.getBoardNodes().get(107),1);
         state.starBoard.getBoardNodes().get(106).addNeighbour(state.starBoard.getBoardNodes().get(114),3);
         state.starBoard.getBoardNodes().get(106).addNeighbour(state.starBoard.getBoardNodes().get(105),4);
         state.starBoard.getBoardNodes().get(106).addNeighbour(state.starBoard.getBoardNodes().get(93),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(107)).setCoordinates(9, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(107)).setCoordinates(9, 12);
         state.starBoard.getBoardNodes().get(107).addNeighbour(state.starBoard.getBoardNodes().get(95),0);
         state.starBoard.getBoardNodes().get(107).addNeighbour(state.starBoard.getBoardNodes().get(108),1);
         state.starBoard.getBoardNodes().get(107).addNeighbour(state.starBoard.getBoardNodes().get(106),4);
         state.starBoard.getBoardNodes().get(107).addNeighbour(state.starBoard.getBoardNodes().get(94),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(108)).setCoordinates(10, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(108)).setCoordinates(10, 12);
         state.starBoard.getBoardNodes().get(108).addNeighbour(state.starBoard.getBoardNodes().get(96),0);
         state.starBoard.getBoardNodes().get(108).addNeighbour(state.starBoard.getBoardNodes().get(109),1);
         state.starBoard.getBoardNodes().get(108).addNeighbour(state.starBoard.getBoardNodes().get(107),4);
         state.starBoard.getBoardNodes().get(108).addNeighbour(state.starBoard.getBoardNodes().get(95),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(109)).setCoordinates(11, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(109)).setCoordinates(11, 12);
         state.starBoard.getBoardNodes().get(109).addNeighbour(state.starBoard.getBoardNodes().get(97),0);
         state.starBoard.getBoardNodes().get(109).addNeighbour(state.starBoard.getBoardNodes().get(110),1);
         state.starBoard.getBoardNodes().get(109).addNeighbour(state.starBoard.getBoardNodes().get(108),4);
         state.starBoard.getBoardNodes().get(109).addNeighbour(state.starBoard.getBoardNodes().get(96),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(110)).setCoordinates(12, 13);
+        ((CCNode)state.starBoard.getBoardNodes().get(110)).setCoordinates(12, 12);
         state.starBoard.getBoardNodes().get(110).addNeighbour(state.starBoard.getBoardNodes().get(109),4);
         state.starBoard.getBoardNodes().get(110).addNeighbour(state.starBoard.getBoardNodes().get(97),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(111)).setCoordinates(4, 14);
+        ((CCNode)state.starBoard.getBoardNodes().get(111)).setCoordinates(4, 13);
         state.starBoard.getBoardNodes().get(111).addNeighbour(state.starBoard.getBoardNodes().get(103),0);
         state.starBoard.getBoardNodes().get(111).addNeighbour(state.starBoard.getBoardNodes().get(112),1);
         state.starBoard.getBoardNodes().get(111).addNeighbour(state.starBoard.getBoardNodes().get(115),2);
         state.starBoard.getBoardNodes().get(111).addNeighbour(state.starBoard.getBoardNodes().get(102),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(112)).setCoordinates(5, 14);
+        ((CCNode)state.starBoard.getBoardNodes().get(112)).setCoordinates(5, 13);
         state.starBoard.getBoardNodes().get(112).addNeighbour(state.starBoard.getBoardNodes().get(104),0);
         state.starBoard.getBoardNodes().get(112).addNeighbour(state.starBoard.getBoardNodes().get(113),1);
         state.starBoard.getBoardNodes().get(112).addNeighbour(state.starBoard.getBoardNodes().get(116),2);
@@ -1331,7 +1328,7 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(112).addNeighbour(state.starBoard.getBoardNodes().get(111),4);
         state.starBoard.getBoardNodes().get(112).addNeighbour(state.starBoard.getBoardNodes().get(103),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(113)).setCoordinates(6, 14);
+        ((CCNode)state.starBoard.getBoardNodes().get(113)).setCoordinates(6, 13);
         state.starBoard.getBoardNodes().get(113).addNeighbour(state.starBoard.getBoardNodes().get(105),0);
         state.starBoard.getBoardNodes().get(113).addNeighbour(state.starBoard.getBoardNodes().get(114),1);
         state.starBoard.getBoardNodes().get(113).addNeighbour(state.starBoard.getBoardNodes().get(117),2);
@@ -1339,19 +1336,19 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(113).addNeighbour(state.starBoard.getBoardNodes().get(112),4);
         state.starBoard.getBoardNodes().get(113).addNeighbour(state.starBoard.getBoardNodes().get(104),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(114)).setCoordinates(7, 14);
+        ((CCNode)state.starBoard.getBoardNodes().get(114)).setCoordinates(7, 13);
         state.starBoard.getBoardNodes().get(114).addNeighbour(state.starBoard.getBoardNodes().get(106),0);
         state.starBoard.getBoardNodes().get(114).addNeighbour(state.starBoard.getBoardNodes().get(117),3);
         state.starBoard.getBoardNodes().get(114).addNeighbour(state.starBoard.getBoardNodes().get(113),4);
         state.starBoard.getBoardNodes().get(114).addNeighbour(state.starBoard.getBoardNodes().get(105),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(115)).setCoordinates(5, 15);
+        ((CCNode)state.starBoard.getBoardNodes().get(115)).setCoordinates(5, 14);
         state.starBoard.getBoardNodes().get(115).addNeighbour(state.starBoard.getBoardNodes().get(112),0);
         state.starBoard.getBoardNodes().get(115).addNeighbour(state.starBoard.getBoardNodes().get(116),1);
         state.starBoard.getBoardNodes().get(115).addNeighbour(state.starBoard.getBoardNodes().get(118),2);
         state.starBoard.getBoardNodes().get(115).addNeighbour(state.starBoard.getBoardNodes().get(111),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(116)).setCoordinates(6, 15);
+        ((CCNode)state.starBoard.getBoardNodes().get(116)).setCoordinates(6, 14);
         state.starBoard.getBoardNodes().get(116).addNeighbour(state.starBoard.getBoardNodes().get(113),0);
         state.starBoard.getBoardNodes().get(116).addNeighbour(state.starBoard.getBoardNodes().get(117),1);
         state.starBoard.getBoardNodes().get(116).addNeighbour(state.starBoard.getBoardNodes().get(119),2);
@@ -1359,19 +1356,19 @@ public class CCForwardModel extends StandardForwardModel {
         state.starBoard.getBoardNodes().get(116).addNeighbour(state.starBoard.getBoardNodes().get(115),4);
         state.starBoard.getBoardNodes().get(116).addNeighbour(state.starBoard.getBoardNodes().get(112),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(117)).setCoordinates(7, 15);
+        ((CCNode)state.starBoard.getBoardNodes().get(117)).setCoordinates(7, 14);
         state.starBoard.getBoardNodes().get(117).addNeighbour(state.starBoard.getBoardNodes().get(114),0);
         state.starBoard.getBoardNodes().get(117).addNeighbour(state.starBoard.getBoardNodes().get(119),3);
         state.starBoard.getBoardNodes().get(117).addNeighbour(state.starBoard.getBoardNodes().get(116),4);
         state.starBoard.getBoardNodes().get(117).addNeighbour(state.starBoard.getBoardNodes().get(113),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(118)).setCoordinates(5, 16);
+        ((CCNode)state.starBoard.getBoardNodes().get(118)).setCoordinates(5, 15);
         state.starBoard.getBoardNodes().get(118).addNeighbour(state.starBoard.getBoardNodes().get(116),0);
         state.starBoard.getBoardNodes().get(118).addNeighbour(state.starBoard.getBoardNodes().get(119),1);
         state.starBoard.getBoardNodes().get(118).addNeighbour(state.starBoard.getBoardNodes().get(120),2);
         state.starBoard.getBoardNodes().get(118).addNeighbour(state.starBoard.getBoardNodes().get(115),5);;
 
-        ((CCNode)state.starBoard.getBoardNodes().get(119)).setCoordinates(6, 16);
+        ((CCNode)state.starBoard.getBoardNodes().get(119)).setCoordinates(6, 15);
         state.starBoard.getBoardNodes().get(119).addNeighbour(state.starBoard.getBoardNodes().get(117),0);
         state.starBoard.getBoardNodes().get(119).addNeighbour(state.starBoard.getBoardNodes().get(120),3);
         state.starBoard.getBoardNodes().get(119).addNeighbour(state.starBoard.getBoardNodes().get(118),4);

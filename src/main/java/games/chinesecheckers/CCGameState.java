@@ -8,11 +8,14 @@ import games.GameType;
 import games.chinesecheckers.components.Peg;
 import games.chinesecheckers.components.StarBoard;
 import games.connect4.Connect4Heuristic;
+import games.dotsboxes.DBGameState;
 import gametemplate.GTGameState;
 import scala.reflect.internal.Trees;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CCGameState extends AbstractGameState {
 
@@ -71,12 +74,18 @@ public class CCGameState extends AbstractGameState {
     @Override
     protected boolean _equals(Object o) {
         // TODO: compare all variables in the state
-        return o instanceof CCGameState;
+        if (this == o) return true;
+        if (!(o instanceof CCGameState)) return false;
+        if (!super.equals(o)) return false;
+        CCGameState that = (CCGameState) o;
+        return PLAYER_PEGS == that.PLAYER_PEGS && Objects.equals(starBoard, that.starBoard);
     }
 
     @Override
     public int hashCode() {
         // TODO: include the hash code of all variables
-        return super.hashCode();
+        int result = Objects.hash(super.hashCode(), starBoard, PLAYER_PEGS);
+        result = 31 * result;
+        return result;
     }
 }
