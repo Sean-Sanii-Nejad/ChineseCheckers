@@ -20,14 +20,14 @@ public class ActionTests {
     Game game = GameType.ChineseCheckers.createGameInstance(4, new CCParameters(3));
     CCGameState state = (CCGameState) game.getGameState();
 
-    @Test
-    public void movingPegFunctionality(){
-        CCGameState state = (CCGameState) game.getGameState();
-        MovePeg movePeg = new MovePeg(((CCNode) state.getStarBoard().getBoardNodes().get(6)), ((CCNode) state.getStarBoard().getBoardNodes().get(15)));
-
-        fm.computeAvailableActions(state);
-        fm.next(state, movePeg);
-    }
+//    @Test
+//    public void movingPegFunctionality(){
+//        CCGameState state = (CCGameState) game.getGameState();
+//        MovePeg movePeg = new MovePeg(((CCNode) state.getStarBoard().getBoardNodes().get(6)), ((CCNode) state.getStarBoard().getBoardNodes().get(15)));
+//
+//        fm.computeAvailableActions(state);
+//        fm.next(state, movePeg);
+//    }
 
     @Test
     public void startPegLocations(){

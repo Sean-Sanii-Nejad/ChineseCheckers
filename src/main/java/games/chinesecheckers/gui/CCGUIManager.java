@@ -35,17 +35,15 @@ public class CCGUIManager extends AbstractGUIManager {
         this.height = 450;
 
         JPanel infoPanel = createGameStateInfoPanel("ChineseCheckers", gameState, width, defaultInfoPanelHeight);
-        JComponent actionPanel = createActionPanel(new IScreenHighlight[]{view},
-                width, defaultActionPanelHeight);
+        JComponent actionPanel = createActionPanel(new IScreenHighlight[0], width, defaultActionPanelHeight, false, true, null);
 
         // Debug Colours
-        infoPanel.setBackground(Color.green);
-        actionPanel.setBackground(Color.red);
+//        infoPanel.setBackground(Color.green);
+//        actionPanel.setBackground(Color.red);
 
         view.setForeground(Color.cyan);
 
         parent.setLayout(new BorderLayout());
-
         parent.add(infoPanel, BorderLayout.NORTH);
         parent.add(actionPanel, BorderLayout.SOUTH);
         parent.add(view, BorderLayout.CENTER);
@@ -64,7 +62,7 @@ public class CCGUIManager extends AbstractGUIManager {
     @Override
     public int getMaxActionSpace() {
         // TODO
-        return 10;
+        return 100;
     }
 
     /**

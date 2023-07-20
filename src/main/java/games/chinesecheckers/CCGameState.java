@@ -3,24 +3,17 @@ package games.chinesecheckers;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Component;
-import core.components.GridBoard;
+import core.components.GraphBoard;
 import games.GameType;
-import games.chinesecheckers.components.Peg;
 import games.chinesecheckers.components.StarBoard;
-import games.connect4.Connect4Heuristic;
-import games.dotsboxes.DBGameState;
-import gametemplate.GTGameState;
-import scala.reflect.internal.Trees;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class CCGameState extends AbstractGameState {
 
     public int PLAYER_PEGS = 10;
-
     StarBoard starBoard;
 
     public CCGameState(AbstractParameters gameParameters, int nPlayers) {
@@ -48,7 +41,7 @@ public class CCGameState extends AbstractGameState {
     @Override
     protected AbstractGameState _copy(int playerId) {
         CCGameState copy = new CCGameState(gameParameters, getNPlayers());
-        copy.starBoard = starBoard;
+        copy.starBoard = starBoard.copy();
         copy.PLAYER_PEGS = PLAYER_PEGS;
 
         return copy;

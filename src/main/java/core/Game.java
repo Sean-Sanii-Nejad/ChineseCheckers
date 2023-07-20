@@ -9,13 +9,19 @@ import evaluation.listeners.IGameListener;
 import evaluation.metrics.Event;
 import evaluation.summarisers.TAGNumericStatSummary;
 import games.GameType;
+import games.chinesecheckers.CCHeuristic;
 import gui.*;
 import io.humble.video.*;
 import io.humble.video.awt.MediaPictureConverter;
 import io.humble.video.awt.MediaPictureConverterFactory;
+import players.PlayerConstants;
+import players.heuristics.WinOnlyHeuristic;
 import players.human.*;
+import players.mcts.MCTSEnums;
+import players.mcts.MCTSParams;
 import players.mcts.MCTSPlayer;
 import players.rmhc.RMHCPlayer;
+import players.simple.OSLAPlayer;
 import players.simple.RandomPlayer;
 import utilities.Pair;
 import utilities.Utils;
@@ -30,6 +36,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static utilities.Utils.componentToImage;
+import static utilities.Utils.generatePermutations;
 
 public class Game {
 
@@ -912,8 +919,6 @@ public class Game {
         }
     }
 
-
-
     /**
      * The recommended way to run a game is via evaluations.Frontend, however that may not work on
      * some games for some screen sizes due to the vagaries of Java Swing...
@@ -937,10 +942,28 @@ public class Game {
         ArrayList<AbstractPlayer> players = new ArrayList<>();
 
 //        players.add(new HumanGUIPlayer(new ActionController()));
+        MCTSParams params = new MCTSParams();
+        MCTSParams params2 = new MCTSParams();
+
+
+        params.rolloutLength = 1000;
+//        params.budgetType = PlayerConstants.BUDGET_TIME;
+        params.budget = 100;
+        params.heuristic = new CCHeuristic();
+
+        params2.rolloutLength = 1000;
+        //params2.budgetType = PlayerConstants.BUDGET_TIME;
+        params2.budget = 100;
+        params2.heuristic = new WinOnlyHeuristic();
+
+        players.add(new MCTSPlayer(params));
+        players.add(new RandomPlayer());
 //        players.add(new MCTSPlayer());
-        players.add(new RandomPlayer());
-        players.add(new RandomPlayer());
+//        players.add(new RMHCPlayer());
+
 //        players.add(new HumanConsolePlayer());
+//        players.add(new HumanGUIPlayer(new ActionController()));
+
 
 //        players.add(new RandomPlayer());
 

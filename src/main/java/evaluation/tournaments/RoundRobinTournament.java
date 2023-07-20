@@ -6,8 +6,11 @@ import core.interfaces.IStatisticLogger;
 import evaluation.listeners.IGameListener;
 import evaluation.loggers.FileStatsLogger;
 import games.GameType;
+import games.chinesecheckers.CCHeuristic;
+import players.PlayerConstants;
 import players.PlayerFactory;
 import players.mcts.BasicMCTSPlayer;
+import players.mcts.MCTSParams;
 import players.mcts.MCTSPlayer;
 import players.rmhc.RMHCPlayer;
 import players.simple.OSLAPlayer;
@@ -107,11 +110,11 @@ public class RoundRobinTournament extends AbstractTournament {
             return;
         }
         /* 1. Settings for the tournament */
-        GameType gameToPlay = GameType.valueOf(getArg(args, "game", "TicTacToe"));
+        GameType gameToPlay = GameType.valueOf(getArg(args, "game", "ChineseCheckers"));
         int nPlayersPerGame = getArg(args, "nPlayers", 2);
         boolean selfPlay = getArg(args, "selfPlay", false);
         String mode = getArg(args, "mode", "random");
-        int matchups = getArg(args, "matchups", 1);
+        int matchups = getArg(args, "matchups", 5);
         String playerDirectory = getArg(args, "players", "");
         String gameParams = getArg(args, "gameParams", "");
         String statsLogPrefix = getArg(args, "statsLog", "");
@@ -119,8 +122,8 @@ public class RoundRobinTournament extends AbstractTournament {
         int reportPeriod = getArg(args, "reportPeriod", matchups); //matchups
         boolean randomGameParams = getArg(args, "randomGameParams", false);
 
-        List<String> listenerClasses = new ArrayList<>(Arrays.asList(getArg(args, "listener", "evaluation.listeners.MetricsGameListener").split("\\|")));
-        List<String> metricsClasses = new ArrayList<>(Arrays.asList(getArg(args, "metrics", "evaluation.metrics.GameMetrics").split("\\|")));
+        List<String> listenerClasses = new ArrayList<>(Arrays.asList(getArg(args, "listener", "").split("\\|")));
+        List<String> metricsClasses = new ArrayList<>(Arrays.asList(getArg(args, "metrics", "").split("\\|")));
         List<String> listenerFiles = new ArrayList<>(Arrays.asList(getArg(args, "listenerFile", "RoundRobinReport.txt").split("\\|")));
 
         if (listenerClasses.size() > 1 && listenerFiles.size() > 1 && listenerClasses.size() != listenerFiles.size())
@@ -138,8 +141,15 @@ public class RoundRobinTournament extends AbstractTournament {
             }
         } else {
             /* 2. Set up players */
+            MCTSParams params = new MCTSParams();
+
+            params.rolloutLength = 1000;
+            params.budgetType = PlayerConstants.BUDGET_TIME;
+            params.budget = 40;
+            params.heuristic = new CCHeuristic();
+
             agents.add(new MCTSPlayer());
-            agents.add(new BasicMCTSPlayer());
+            agents.add(new RandomPlayer());
 //            agents.add(new RandomPlayer());
 //            agents.add(new RMHCPlayer());
 //            agents.add(new OSLAPlayer());

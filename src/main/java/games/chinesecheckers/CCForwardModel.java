@@ -5,19 +5,18 @@ import core.CoreConstants;
 import core.StandardForwardModel;
 import core.actions.AbstractAction;
 import core.components.BoardNode;
-import core.components.GridBoard;
+import core.components.GraphBoard;
 import games.chinesecheckers.actions.MovePeg;
 import games.chinesecheckers.components.CCNode;
 import games.chinesecheckers.components.Peg;
 import games.chinesecheckers.components.StarBoard;
-import games.stratego.StrategoGameState;
-import games.tictactoe.TicTacToeGameState;
-import gametemplate.actions.GTAction;
-import org.apache.hadoop.shaded.org.checkerframework.checker.units.qual.C;
-import org.apache.hadoop.yarn.webapp.hamlet2.Hamlet;
+import games.connect4.Connect4Constants;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.IntStream;
+
+import static core.CoreConstants.GameResult.*;
 
 public class CCForwardModel extends StandardForwardModel {
 
@@ -27,31 +26,15 @@ public class CCForwardModel extends StandardForwardModel {
         System.out.println("");
         CCParameters params = (CCParameters) firstState.getGameParameters();
         CCGameState state = (CCGameState) firstState;
-        state.starBoard = new StarBoard();
 
         //loadStarBoard("src/main/java/games/chinesecheckers/board_adj.csv", state);
         loadStarBoardManually(state);
-        if(state.getNPlayers() == 2){
+
+//        testing(state);
+        if (state.getNPlayers() == 2) {
             loadPegs2Player(state);
         }
-
         loadNodeBaseColours(state);
-//        if(state.getNPlayers() == 3){
-//            loadPegs3Player(state);
-//        }
-//        testing(state);
-
-        //loadXYCoordinatesStarBoard("src/main/java/games/chinesecheckers/boardMask.txt", state);
-
-        // Testing
-//        System.out.println(state.starBoard.getBoardNodes().get(0).getNeighbours());
-//        Peg peg = ((CCNode)state.starBoard.getBoardNodes().get(0)).getOccupiedPeg();
-//        if(peg != null) System.out.println(peg.getColour());
-//        else System.out.println("No Occupied Peg on node");
-//        System.out.println(((CCNode) state.starBoard.getBoardNodes().get(50)).getOccupiedPeg().getOccupiedNode());
-//        System.out.println(state.starBoard.getBoardNodes().get(51).getNeighbourSideMapping().get(state.starBoard.getBoardNodes().get(27)));
-//        System.out.println(((CCNode)state.starBoard.getBoardNodes().get(0)).getX() + " " + ((CCNode)state.starBoard.getBoardNodes().get(0)).getY());
-
     }
 
     @Override
@@ -59,9 +42,6 @@ public class CCForwardModel extends StandardForwardModel {
         CCGameState state = (CCGameState) gameState;
         List<AbstractAction> actions = new ArrayList<>();
         int player = gameState.getCurrentPlayer();
-
-        System.out.println("Player: " +player);
-
         if(state.getNPlayers() == 2){
             load2PlayerActions(player, state, actions);
         }
@@ -79,7 +59,12 @@ public class CCForwardModel extends StandardForwardModel {
 
     @Override
     protected void endGame(AbstractGameState gs) {
-        super.endGame(gs);
+        CCGameState state = (CCGameState) gs;
+        state.setGameStatus(CoreConstants.GameResult.GAME_END);
+
+
+        state.setPlayerResult(WIN_GAME, 0);
+        state.setPlayerResult(LOSE_GAME, 1);
     }
 
     @Override
@@ -87,30 +72,107 @@ public class CCForwardModel extends StandardForwardModel {
         CCGameState state = (CCGameState) currentState;
         List<AbstractAction> actions = new ArrayList<>();
 
-        if(!checkWinConditionPurple(state)){
-            endPlayerTurn(currentState);
+        if(state.getCurrentPlayer() == 1){
+            for(int i = 0; i < ((CCGameState) currentState).getStarBoard().getSize(); i++){
+                if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).isNodeOccupied()){
+                    // Check if purple is in red base
+                    if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().getColour2() == Peg.Colour2.purple){
+                        if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getBaseColour() == CCNode.Base.red){
+                            ((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().setInDestination(true);
+                        }
+                    }
+                    // Check if red was in purple base
+                    if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().getColour2() == Peg.Colour2.red){
+                        if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getBaseColour() == CCNode.Base.purple){
+                            //((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().setInDestination(true);
+                        }
+                    }
+                }
+            }
         }
-        else {
-            currentState.setPlayerResult(CoreConstants.GameResult.WIN_GAME, Peg.Colour2.purple.ordinal());
-            currentState.setPlayerResult(CoreConstants.GameResult.LOSE_GAME, Peg.Colour2.red.ordinal());
-            currentState.setGameStatus(CoreConstants.GameResult.GAME_END);
-            endGame(state);
+
+        endPlayerTurn(state);
+        checkWinConditionPurple((CCGameState) state);
+        checkWinConditionRed((CCGameState) state);
+    }
+
+    private boolean checkWinConditionPurple(CCGameState state) {
+        int counter = 0;
+        List<CCNode> nodes = state.getStarBoard().getBoardNodes();
+        for(int i = 111; i <= 120; i++){
+            if(nodes.get(i).isNodeOccupied() && nodes.get(i).getOccupiedPeg().getColour2() == Peg.Colour2.purple){
+                counter++;
+                System.out.println(counter);
+            }
         }
+        if(counter >= 3){
+            state.setGameStatus(CoreConstants.GameResult.GAME_END);
+            state.setPlayerResult(WIN_GAME, 0);
+            state.setPlayerResult(LOSE_GAME, 1);
+            return true;
+        }
+        return false;
+//        int counter = 0;
+//        boolean checkOwn = false;
+//        for(int i = 111; i <= 120; i++){
+//            if(((CCNode) state.starBoard.getBoardNodes().get(i)).isNodeOccupied()){
+//                counter++;
+//                if(((CCNode) state.starBoard.getBoardNodes().get(i)).getOccupiedPeg().getColour2() == Peg.Colour2.purple){
+//                    checkOwn = true;
+//                }
+//            }
+//        }
+//        if(counter > 6 && checkOwn == true){
+//            state.setGameStatus(CoreConstants.GameResult.GAME_END);
+//            state.setPlayerResult(WIN_GAME, 0);
+//            state.setPlayerResult(LOSE_GAME, 1);
+//            return true;
+//        }
+//        return false;
+    }
+
+    private boolean checkWinConditionRed(CCGameState state) {
+        int counter = 0;
+        boolean checkOwn = false;
+        for(int i = 0; i <= 9; i++){
+            if(((CCNode) state.starBoard.getBoardNodes().get(i)).isNodeOccupied()){
+                counter++;
+                if(((CCNode) state.starBoard.getBoardNodes().get(i)).getOccupiedPeg().getColour2() == Peg.Colour2.red){
+                    checkOwn = true;
+                }
+            }
+        }
+        if(counter > 9 && checkOwn == true){
+            state.setGameStatus(CoreConstants.GameResult.GAME_END);
+            state.setPlayerResult(WIN_GAME, 1);
+            state.setPlayerResult(LOSE_GAME, 0);
+            return true;
+        }
+        return false;
     }
 
     private void load2PlayerActions(int player, CCGameState state, List<AbstractAction> actions){
         // Player Purple
         //System.out.println(((CCNode)state.starBoard.getBoardNodes().get(13)).getColour());
-        BoardNode temp = null;
+        CCNode temp = null;
         if (player == Peg.Colour2.purple.ordinal()) {
-            for (BoardNode node : state.starBoard.getBoardNodes()) { // Check all Nodes
-                if (((CCNode) node).getOccupiedPeg() != null && ((CCNode) node).getOccupiedPeg().getColour2() == Peg.Colour2.purple) { // Check colour is purple & not null
-                    for (BoardNode neighbourNode : node.getNeighbours()) { // loop neighbors of that Node
-                        if (((CCNode)neighbourNode).isNodeOccupied()){ // If Neighbour has Peg on it
+            for (CCNode node : state.starBoard.getBoardNodes()) { // Check all Nodes
+                if (node.getOccupiedPeg() != null && ((CCNode) node).getOccupiedPeg().getColour2() == Peg.Colour2.purple) { // Check colour is purple & not null
+                    for (CCNode neighbourNode : node.getNeighbours()) { // loop neighbors of that Node
+                        if (neighbourNode.isNodeOccupied()){ // If Neighbour has Peg on it
                             temp = node;
                             repeatAction(node, temp, actions, CCNode.Base.purple, CCNode.Base.red);
-                        } else if(((CCNode) neighbourNode).getColour() == CCNode.Base.purple || ((CCNode) neighbourNode).getColour() == CCNode.Base.red || ((CCNode) neighbourNode).getColour() == CCNode.Base.neutral) {
-                            actions.add(new MovePeg((CCNode) node, (CCNode) neighbourNode));
+                        }
+                        else if(((CCNode) neighbourNode).getBaseColour() == CCNode.Base.purple || ((CCNode) neighbourNode).getBaseColour() == CCNode.Base.red || ((CCNode) neighbourNode).getBaseColour() == CCNode.Base.neutral) {
+                            if(node.getOccupiedPeg().getInDestination() == true){
+                                if(neighbourNode.getID() == 102 || neighbourNode.getID() == 103 || neighbourNode.getID() == 104 || neighbourNode.getID() == 105 || neighbourNode.getID() == 106){
+                                }
+                                else {
+                                    actions.add(new MovePeg(node.getID(), neighbourNode.getID()));
+                                }
+                            } else {
+                                actions.add(new MovePeg(node.getID(), neighbourNode.getID()));
+                            }
                         }
                     }
                 }
@@ -119,14 +181,23 @@ public class CCForwardModel extends StandardForwardModel {
         // Player Red
         temp = null;
         if (player == Peg.Colour2.red.ordinal()) {
-            for (BoardNode node : state.starBoard.getBoardNodes()) { // Check all Nodes
-                if (((CCNode) node).getOccupiedPeg() != null && ((CCNode) node).getOccupiedPeg().getColour2() == Peg.Colour2.red) { // Check colour is purple & not null
-                    for (BoardNode neighbourNode : node.getNeighbours()) { // loop neighbors of that Node
-                        if (((CCNode)neighbourNode).isNodeOccupied()){ // If Neighbour has Peg on it
+            for (CCNode node : state.starBoard.getBoardNodes()) { // Check all Nodes
+                if (node.getOccupiedPeg() != null && ((CCNode) node).getOccupiedPeg().getColour2() == Peg.Colour2.red) { // Check colour is purple & not null
+                    for (CCNode neighbourNode : node.getNeighbours()) { // loop neighbors of that Node
+                        if (neighbourNode.isNodeOccupied()){ // If Neighbour has Peg on it
                             temp = node;
                             repeatAction(node, temp, actions, CCNode.Base.red, CCNode.Base.purple);
-                        } else if(((CCNode) neighbourNode).getColour() == CCNode.Base.red || ((CCNode) neighbourNode).getColour() == CCNode.Base.purple || ((CCNode) neighbourNode).getColour() == CCNode.Base.neutral) {
-                            actions.add(new MovePeg((CCNode) node, (CCNode) neighbourNode));
+                        }
+                        else if(((CCNode) neighbourNode).getBaseColour() == CCNode.Base.purple || ((CCNode) neighbourNode).getBaseColour() == CCNode.Base.red || ((CCNode) neighbourNode).getBaseColour() == CCNode.Base.neutral) {
+                            if(node.getOccupiedPeg().getInDestination() == true){
+                                if(neighbourNode.getID() == 14 || neighbourNode.getID() == 15 || neighbourNode.getID() == 16 || neighbourNode.getID() == 17 || neighbourNode.getID() == 18){
+                                }
+                                else {
+                                    actions.add(new MovePeg(node.getID(), neighbourNode.getID()));
+                                }
+                            } else {
+                                actions.add(new MovePeg(node.getID(), neighbourNode.getID()));
+                            }
                         }
                     }
                 }
@@ -134,20 +205,26 @@ public class CCForwardModel extends StandardForwardModel {
         }
     }
 
-    private void repeatAction(BoardNode node, BoardNode temp, List<AbstractAction> actions, CCNode.Base colour, CCNode.Base colour_opp){
+    private void repeatAction(CCNode node, CCNode temp, List<AbstractAction> actions, CCNode.Base colour, CCNode.Base colour_opp){
         int processedNodes = 0;
         while(processedNodes < 125) {
-            for(BoardNode neighbourNode : node.getNeighbours()){
+            for(CCNode neighbourNode : node.getNeighbours()){
                 processedNodes++;
-                if(((CCNode)neighbourNode).isNodeOccupied()){
-                    for(BoardNode neighbourNode1 : neighbourNode.getNeighbours()){
+                if((neighbourNode).isNodeOccupied()){
+                    for(CCNode neighbourNode1 : neighbourNode.getNeighbours()){
                         if(node.getNeighbours().contains(neighbourNode) && neighbourNode.getNeighbours().contains(neighbourNode1)){
                             if(node.getNeighbourSideMapping().get(neighbourNode).intValue() == neighbourNode.getNeighbourSideMapping().get(neighbourNode1).intValue()){
                                 if(!((CCNode)neighbourNode1).isNodeOccupied()) {
-                                    MovePeg action = new MovePeg((CCNode) temp, (CCNode) neighbourNode1);
+                                    MovePeg action = new MovePeg(temp.getID(), neighbourNode1.getID());
                                     node = neighbourNode1;
                                     if(((CCNode) neighbourNode1).getBaseColour() == colour || ((CCNode) neighbourNode1).getBaseColour() == colour_opp  || ((CCNode) neighbourNode1).getBaseColour() == CCNode.Base.neutral){
-                                        if(!actions.contains(action)){
+                                        if(temp.getOccupiedPeg().getInDestination() == true){
+                                            if(neighbourNode1.getBaseColour() == CCNode.Base.neutral){
+                                            } else if(!actions.contains(action)){
+                                                actions.add(action);
+                                            }
+                                        }
+                                        else if(!actions.contains(action)){
                                             actions.add(action);
                                         }
                                     }
@@ -161,69 +238,7 @@ public class CCForwardModel extends StandardForwardModel {
     }
 
     private void load3PlayerActions(int player, CCGameState state, List<AbstractAction> actions) {
-        // Player Red
-        if(player == Peg.Colour3.red.ordinal()){
-            int index = 0;
-            for(BoardNode node : state.starBoard.getBoardNodes()){
-                CCNode nodeSpecial = (CCNode) node;
-                if(nodeSpecial.getOccupiedPeg() != null){
-                    if(nodeSpecial.getOccupiedPeg().getColour3() == Peg.Colour3.red){
-                        Iterator<BoardNode> iterator = state.starBoard.getBoardNodes().get(index).getNeighbours().iterator();
-                        while(iterator.hasNext()) {
-                            CCNode ccNode = (CCNode) iterator.next();
-                            if (ccNode.isNodeOccupied()) {
-                                continue;
-                            }
-                            actions.add(new MovePeg((CCNode)state.starBoard.getBoardNodes().get(index), ccNode));
-                        }
-                    }
-                }
-                index++;
-            }
-        }
 
-        // Player Blue
-        if(player == Peg.Colour3.blue.ordinal()){
-            int index = 0;
-            for(BoardNode node : state.starBoard.getBoardNodes()){
-                CCNode nodeSpecial = (CCNode) node;
-                if(nodeSpecial.getOccupiedPeg() != null){
-                    if(nodeSpecial.getOccupiedPeg().getColour3() == Peg.Colour3.blue){
-                        Iterator<BoardNode> iterator = state.starBoard.getBoardNodes().get(index).getNeighbours().iterator();
-                        while(iterator.hasNext()) {
-                            CCNode ccNode = (CCNode) iterator.next();
-                            if (ccNode.isNodeOccupied()) {
-                                continue;
-                            }
-                            actions.add(new MovePeg((CCNode)state.starBoard.getBoardNodes().get(index), ccNode));
-                        }
-                    }
-                }
-                index++;
-            }
-        }
-
-        // Player Green
-        if(player == Peg.Colour3.green.ordinal()){
-            int index = 0;
-            for(BoardNode node : state.starBoard.getBoardNodes()){
-                CCNode nodeSpecial = (CCNode) node;
-                if(nodeSpecial.getOccupiedPeg() != null){
-                    if(nodeSpecial.getOccupiedPeg().getColour3() == Peg.Colour3.green){
-                        Iterator<BoardNode> iterator = state.starBoard.getBoardNodes().get(index).getNeighbours().iterator();
-                        while(iterator.hasNext()) {
-                            CCNode ccNode = (CCNode) iterator.next();
-                            if (ccNode.isNodeOccupied()) {
-                                // Check its neighbours -- Check if it's a straight line to jump
-                                continue;
-                            }
-                            actions.add(new MovePeg((CCNode)state.starBoard.getBoardNodes().get(index), ccNode));
-                        }
-                    }
-                }
-                index++;
-            }
-        }
     }
 
     private void load4PlayerActions(int player, CCGameState state, List<AbstractAction> actions) {
@@ -233,25 +248,6 @@ public class CCForwardModel extends StandardForwardModel {
     }
 
     // Infinite Loop Crash - Apparently all players are terminal, but game state is not
-    private boolean checkWinConditionPurple(CCGameState state) {
-        int counter = 0;
-        boolean checkOwn = false;
-        for(int i = 111; i <= 120; i++){
-            if(((CCNode) state.starBoard.getBoardNodes().get(i)).isNodeOccupied()){
-                counter++;
-                if(((CCNode) state.starBoard.getBoardNodes().get(i)).getOccupiedPeg().getColour2() == Peg.Colour2.purple){
-                    checkOwn = true;
-                }
-            }
-        }
-        if(counter >= 9 && checkOwn == true){
-            state.setGameStatus(CoreConstants.GameResult.GAME_END);
-            state.setPlayerResult(CoreConstants.GameResult.WIN_GAME, Peg.Colour2.purple.ordinal());
-            state.setPlayerResult(CoreConstants.GameResult.LOSE_GAME, Peg.Colour2.red.ordinal());
-            return true;
-        }
-        return false;
-    }
 
     // Currently Broken - Does not set XY Coordinates
     private void loadXYCoordinatesStarBoard(String filePath, CCGameState state){
@@ -497,11 +493,16 @@ public class CCForwardModel extends StandardForwardModel {
     }
 
     public void testing(CCGameState state){
+        ((CCNode) state.starBoard.getBoardNodes().get(111)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(111)));
+        ((CCNode) state.starBoard.getBoardNodes().get(89)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(89)));
+        ((CCNode) state.starBoard.getBoardNodes().get(115)).setOccupiedPeg(new Peg(Peg.Colour2.purple, (CCNode)state.starBoard.getBoardNodes().get(115)));
+        //((CCNode) state.starBoard.getBoardNodes().get(115)).setOccupiedPeg(new Peg(Peg.Colour2.purple, (CCNode)state.starBoard.getBoardNodes().get(115)));
 
-        ((CCNode) state.starBoard.getBoardNodes().get(56)).setOccupiedPeg(new Peg(Peg.Colour2.purple, (CCNode)state.starBoard.getBoardNodes().get(56)));
-        ((CCNode) state.starBoard.getBoardNodes().get(46)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(46)));
-        ((CCNode) state.starBoard.getBoardNodes().get(24)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(24)));
-        ((CCNode) state.starBoard.getBoardNodes().get(13)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(13)));
+
+//        ((CCNode) state.starBoard.getBoardNodes().get(56)).setOccupiedPeg(new Peg(Peg.Colour2.purple, (CCNode)state.starBoard.getBoardNodes().get(56)));
+//        ((CCNode) state.starBoard.getBoardNodes().get(46)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(46)));
+//        ((CCNode) state.starBoard.getBoardNodes().get(24)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(24)));
+//        ((CCNode) state.starBoard.getBoardNodes().get(13)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(13)));
 
 
 //        ((CCNode) state.starBoard.getBoardNodes().get(57)).setOccupiedPeg(new Peg(Peg.Colour2.red, (CCNode)state.starBoard.getBoardNodes().get(57)));
@@ -511,10 +512,13 @@ public class CCForwardModel extends StandardForwardModel {
     }
 
     private void loadStarBoardManually(CCGameState state) {
+        state.starBoard = new StarBoard();
         for(int i = 0; i < 121; i++) {state.starBoard.getBoardNodes().add(new CCNode(i));}
         ((CCNode)state.starBoard.getBoardNodes().get(0)).setCoordinates(6, 0);
         state.starBoard.getBoardNodes().get(0).addNeighbour(state.starBoard.getBoardNodes().get(1),3);
         state.starBoard.getBoardNodes().get(0).addNeighbour(state.starBoard.getBoardNodes().get(2),2);
+
+       //System.out.println(state.starBoard.getBoardNodes().get(0).getNeighbourSideMapping().get(state.starBoard.getBoardNodes().get(1)).intValue());
 
         ((CCNode)state.starBoard.getBoardNodes().get(1)).setCoordinates(5, 1);
         state.starBoard.getBoardNodes().get(1).addNeighbour(state.starBoard.getBoardNodes().get(3), 3);

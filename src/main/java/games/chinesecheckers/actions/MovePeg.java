@@ -11,12 +11,11 @@ import java.util.Objects;
 
 public class MovePeg extends AbstractAction {
 
-    CCNode from;
-    CCNode to;
+    final int from;
+    final int to;
 
-    public MovePeg(CCNode from, CCNode to)
+    public MovePeg(int from, int to)
     {
-        //System.out.println("Peg on: " + from + " moved to " + to);
         this.from = from;
         this.to = to;
     }
@@ -25,15 +24,20 @@ public class MovePeg extends AbstractAction {
     public boolean execute(AbstractGameState gs) {
         CCGameState state = (CCGameState) gs;
 
-        ((CCNode) state.getStarBoard().getBoardNodes().get(to.getID())).setOccupiedPeg(from.getOccupiedPeg());
-        ((CCNode) state.getStarBoard().getBoardNodes().get(from.getID())).setOccupiedPeg(null);
+        CCNode nodeStart = state.getStarBoard().getBoardNodes().get(from);
+        CCNode nodeDestination = state.getStarBoard().getBoardNodes().get(to);
+
+        Peg peg = nodeStart.getOccupiedPeg();
+
+        nodeStart.setOccupiedPeg(null);
+        nodeDestination.setOccupiedPeg(peg);
 
         return true;
     }
 
     @Override
     public AbstractAction copy() {
-        return null; // immutable
+        return this;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class MovePeg extends AbstractAction {
         if (this == obj) return true;
         if (!(obj instanceof MovePeg)) return false;
         MovePeg peg = (MovePeg) obj;
-        return from == peg.from && to == peg.to;
+        return Objects.equals(from, peg.from) && Objects.equals(to, peg.to);
     }
 
     @Override
@@ -51,6 +55,6 @@ public class MovePeg extends AbstractAction {
 
     @Override
     public String getString(AbstractGameState gameState) {
-        return "Peg on Node: " + from.getID() + " move to " + "Node: " + to.getID();
+        return "Peg on Node: " + from + " move to " + "Node: " + to;
     }
 }
