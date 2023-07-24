@@ -958,6 +958,7 @@ public class Game {
 
         players.add(new MCTSPlayer(params));
         players.add(new RandomPlayer());
+
 //        players.add(new MCTSPlayer());
 //        players.add(new RMHCPlayer());
 

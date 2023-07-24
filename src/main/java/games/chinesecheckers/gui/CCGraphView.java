@@ -51,10 +51,10 @@ public class CCGraphView extends ComponentView implements IScreenHighlight {
     }
 
     Color retrieveColourPeg(Peg peg){
-        if(peg.getColour2() == Peg.Colour2.purple){
+        if(peg.getColour() == Peg.Colour.purple){
             return Color.magenta;
         }
-        if(peg.getColour2() == Peg.Colour2.red){
+        if(peg.getColour() == Peg.Colour.red){
             return Color.red.brighter();
         }
         return Color.blue;

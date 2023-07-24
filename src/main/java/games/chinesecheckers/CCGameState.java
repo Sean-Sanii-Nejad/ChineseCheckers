@@ -5,6 +5,7 @@ import core.AbstractParameters;
 import core.components.Component;
 import core.components.GraphBoard;
 import games.GameType;
+import games.chinesecheckers.components.Peg;
 import games.chinesecheckers.components.StarBoard;
 
 import java.util.ArrayList;
@@ -80,5 +81,18 @@ public class CCGameState extends AbstractGameState {
         int result = Objects.hash(super.hashCode(), starBoard, PLAYER_PEGS);
         result = 31 * result;
         return result;
+    }
+
+    public Peg.Colour getPlayerColour(int player) {
+        if (nPlayers == 2) {
+            return Peg.Colour.values()[player * 3];
+        }
+        else if (nPlayers == 3) {
+            return Peg.Colour.values()[player * 2];
+        }
+        else {
+            System.err.println("unimplemented number of players");
+            return Peg.Colour.values()[player];
+        }
     }
 }

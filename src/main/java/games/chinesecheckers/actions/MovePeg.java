@@ -23,7 +23,6 @@ public class MovePeg extends AbstractAction {
     @Override
     public boolean execute(AbstractGameState gs) {
         CCGameState state = (CCGameState) gs;
-
         CCNode nodeStart = state.getStarBoard().getBoardNodes().get(from);
         CCNode nodeDestination = state.getStarBoard().getBoardNodes().get(to);
 

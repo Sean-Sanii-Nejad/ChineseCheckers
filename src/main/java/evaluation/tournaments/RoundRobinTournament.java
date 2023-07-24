@@ -114,7 +114,7 @@ public class RoundRobinTournament extends AbstractTournament {
         int nPlayersPerGame = getArg(args, "nPlayers", 2);
         boolean selfPlay = getArg(args, "selfPlay", false);
         String mode = getArg(args, "mode", "random");
-        int matchups = getArg(args, "matchups", 5);
+        int matchups = getArg(args, "matchups", 1);
         String playerDirectory = getArg(args, "players", "");
         String gameParams = getArg(args, "gameParams", "");
         String statsLogPrefix = getArg(args, "statsLog", "");
@@ -172,7 +172,7 @@ public class RoundRobinTournament extends AbstractTournament {
             IStatisticLogger logger = new FileStatsLogger(logFile);
             String metricsClass = metricsClasses.size() == 1 ? metricsClasses.get(0) : metricsClasses.get(l);
             IGameListener gameTracker = IGameListener.createListener(listenerClasses.get(l), logger, metricsClass);
-            tournament.listeners.add(gameTracker);
+            //tournament.listeners.add(gameTracker);
         }
         tournament.runTournament();
         if (!statsLogPrefix.equals("")) {

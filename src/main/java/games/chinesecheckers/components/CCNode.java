@@ -13,17 +13,7 @@ import java.util.Objects;
 
 public class CCNode extends Component {
 
-    public enum Base {
-        purple,
-        blue,
-        yellow,
-        red,
-        orange,
-        green,
-        neutral;
-    }
-
-    Base colour;
+    private Peg.Colour colour;
 
     private Peg occupiedPeg;
 
@@ -44,7 +34,7 @@ public class CCNode extends Component {
 
     public CCNode(int id){
         super(CoreConstants.ComponentType.BOARD_NODE, "CC", id);
-        colour = Base.neutral;
+        colour = Peg.Colour.neutral;
         this.maxNeighbours = 6;
         this.neighbours = new HashSet<>();
         this.neighbourSideMapping = new HashMap<>();
@@ -52,7 +42,7 @@ public class CCNode extends Component {
 
     public CCNode(int neighbours, String something, int id){
         super(CoreConstants.ComponentType.BOARD_NODE, something, id);
-        colour = Base.neutral;
+        colour = Peg.Colour.neutral;
         this.maxNeighbours = 6;
         this.neighbours = new HashSet<>();
         this.neighbourSideMapping = new HashMap<>();
@@ -62,7 +52,7 @@ public class CCNode extends Component {
         occupiedPeg = peg;
     }
 
-    public void setColourNode(Base colour){
+    public void setColourNode(Peg.Colour colour){
         this.colour = colour;
     }
 
@@ -87,7 +77,7 @@ public class CCNode extends Component {
     public int getY(){
         return y;
     }
-    public Base getBaseColour(){ return colour;}
+    public Peg.Colour getBaseColour(){ return colour;}
 
     public boolean isNodeOccupied(){
         if(occupiedPeg == null) return false;
@@ -193,7 +183,7 @@ public class CCNode extends Component {
 
     @Override
     public final int hashCode() {
-        return Objects.hash(componentID, colour, occupiedPeg);
+        return Objects.hash(componentID);
     }
 
     @Override
