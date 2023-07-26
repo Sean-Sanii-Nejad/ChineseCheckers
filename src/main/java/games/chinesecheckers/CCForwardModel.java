@@ -188,8 +188,6 @@ public class CCForwardModel extends StandardForwardModel {
             if(nodes.get(i).isNodeOccupied() && nodes.get(i).getOccupiedPeg().getColour() == Peg.Colour.purple){
                 PegIn = true;
             }
-        }
-        for(int i = 111; i <= 120; i++){
             if(nodes.get(i).isNodeOccupied() && nodes.get(i).isNodeOccupied()){
                 counter++;
             }
@@ -211,8 +209,6 @@ public class CCForwardModel extends StandardForwardModel {
             if(nodes.get(i).isNodeOccupied() && nodes.get(i).getOccupiedPeg().getColour() == Peg.Colour.red){
                 PegIn = true;
             }
-        }
-        for(int i = 0; i <= 9; i++){
             if(nodes.get(i).isNodeOccupied() && nodes.get(i).isNodeOccupied()){
                 counter++;
             }
