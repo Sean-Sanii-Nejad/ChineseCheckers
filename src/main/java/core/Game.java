@@ -947,17 +947,17 @@ public class Game {
 
 
         params.rolloutLength = 1000;
-//        params.budgetType = PlayerConstants.BUDGET_TIME;
-        params.budget = 100;
+        params.budgetType = PlayerConstants.BUDGET_TIME;
+        params.budget = 40;
         params.heuristic = new CCHeuristic();
 
         params2.rolloutLength = 1000;
-        //params2.budgetType = PlayerConstants.BUDGET_TIME;
-        params2.budget = 100;
+        params2.budgetType = PlayerConstants.BUDGET_TIME;
+        params2.budget = 40;
         params2.heuristic = new WinOnlyHeuristic();
 
         players.add(new MCTSPlayer(params));
-        players.add(new RandomPlayer());
+        players.add(new MCTSPlayer(params2));
 
 //        players.add(new MCTSPlayer());
 //        players.add(new RMHCPlayer());

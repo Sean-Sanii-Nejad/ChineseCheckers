@@ -182,13 +182,19 @@ public class CCForwardModel extends StandardForwardModel {
 
     private boolean checkWinConditionPurple(CCGameState state) {
         int counter = 0;
+        boolean PegIn = false;
         List<CCNode> nodes = state.getStarBoard().getBoardNodes();
         for(int i = 111; i <= 120; i++){
             if(nodes.get(i).isNodeOccupied() && nodes.get(i).getOccupiedPeg().getColour() == Peg.Colour.purple){
+                PegIn = true;
+            }
+        }
+        for(int i = 111; i <= 120; i++){
+            if(nodes.get(i).isNodeOccupied() && nodes.get(i).isNodeOccupied()){
                 counter++;
             }
         }
-        if(counter >= 10){
+        if(counter >= 5 && PegIn){
             state.setGameStatus(CoreConstants.GameResult.GAME_END);
             state.setPlayerResult(WIN_GAME, 0);
             state.setPlayerResult(LOSE_GAME, 1);
@@ -199,16 +205,22 @@ public class CCForwardModel extends StandardForwardModel {
 
     private boolean checkWinConditionRed(CCGameState state) {
         int counter = 0;
+        boolean PegIn = false;
         List<CCNode> nodes = state.getStarBoard().getBoardNodes();
         for(int i = 0; i <= 9; i++){
             if(nodes.get(i).isNodeOccupied() && nodes.get(i).getOccupiedPeg().getColour() == Peg.Colour.red){
+                PegIn = true;
+            }
+        }
+        for(int i = 0; i <= 9; i++){
+            if(nodes.get(i).isNodeOccupied() && nodes.get(i).isNodeOccupied()){
                 counter++;
             }
         }
-        if(counter >= 10){
+        if(counter >= 5 && PegIn){
             state.setGameStatus(CoreConstants.GameResult.GAME_END);
-            state.setPlayerResult(WIN_GAME, 0);
-            state.setPlayerResult(LOSE_GAME, 1);
+            state.setPlayerResult(WIN_GAME, 1);
+            state.setPlayerResult(LOSE_GAME, 0);
             return true;
         }
         return false;
