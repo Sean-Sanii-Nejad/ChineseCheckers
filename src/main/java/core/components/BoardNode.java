@@ -11,9 +11,9 @@ import java.util.HashSet;
 
 public class BoardNode extends Component {
 
-    private HashSet<BoardNode> neighbours;  // Neighbours of this board node
+    protected HashSet<BoardNode> neighbours;  // Neighbours of this board node
     private HashMap<BoardNode, Integer> neighbourSideMapping;  // Neighbours mapping to a side of this board node
-    private int maxNeighbours;  // Maximum number of neighbours for this board node
+    protected int maxNeighbours;  // Maximum number of neighbours for this board node
 
     public BoardNode(int maxNeighbours, String name) {
         super(CoreConstants.ComponentType.BOARD_NODE, name);
@@ -132,7 +132,7 @@ public class BoardNode extends Component {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return componentID;
     }
 }
