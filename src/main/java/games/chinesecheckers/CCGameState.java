@@ -62,7 +62,7 @@ public class CCGameState extends AbstractGameState {
     @Override
     public double getGameScore(int playerId) {
         // TODO: What is this player's score (if any)?
-        return 0;
+        return playerResults[playerId].value;
     }
 
     @Override

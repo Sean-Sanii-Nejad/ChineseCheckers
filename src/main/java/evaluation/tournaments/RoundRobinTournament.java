@@ -214,6 +214,7 @@ public class RoundRobinTournament extends AbstractTournament {
 
         // Run the game N = gamesPerMatchUp times with these players
         for (int i = 0; i < nGames; i++) {
+            System.out.println("game: " + i);
             // Use the same seeds for all games in each matchup (if gameSeeds specified)
             long currentSeed = gameSeeds == null ? game.getGameState().getGameParameters().getRandomSeed() + i + 1 : gameSeeds[i];
             game.reset(matchUpPlayers, currentSeed);

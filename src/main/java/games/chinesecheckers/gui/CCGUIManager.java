@@ -18,13 +18,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CCGUIManager extends AbstractGUIManager {
 
     CCGraphView view;
 
-    public CCGUIManager(GamePanel parent, Game game, ActionController ac, int human) {
-        super(parent, game, ac, human);
+    public CCGUIManager(GamePanel parent, Game game, ActionController ac, Set<Integer> humanId) {
+        super(parent, game, ac, humanId);
         if (game == null) return;
 
         // TODO: set up GUI components and add to `parent`
@@ -35,7 +36,8 @@ public class CCGUIManager extends AbstractGUIManager {
         this.height = 450;
 
         JPanel infoPanel = createGameStateInfoPanel("ChineseCheckers", gameState, width, defaultInfoPanelHeight);
-        JComponent actionPanel = createActionPanel(new IScreenHighlight[0], width, defaultActionPanelHeight, false, true, null);
+        JComponent actionPanel = createActionPanel(new IScreenHighlight[]{view},
+                width, defaultActionPanelHeight, false);
 
         // Debug Colours
 //        infoPanel.setBackground(Color.green);

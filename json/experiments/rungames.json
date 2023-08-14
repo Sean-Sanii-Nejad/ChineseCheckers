@@ -1,8 +1,8 @@
 {
-  "game": "Catan",
+  "game": "ChineseCheckers",
   "selfPlay": false,
-  "nPlayers": 4,
-  "matchups": 1000,
-  "listener": "metrics/catan.json",
-  "reportPeriod": 100
+  "playerDirectory" : "json/players/ccPlayers",
+  "nPlayers": 2,
+  "matchups": 50,
+  "listener": "metrics/chinesecheckers.json"
 }

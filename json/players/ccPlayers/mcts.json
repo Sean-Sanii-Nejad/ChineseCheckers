@@ -1,0 +1,15 @@
+{
+	"class" : "players.mcts.MCTSParams",
+	"K" : 1.0,
+	"rolloutLength" : 300,
+	"maxTreeDepth" : 30,
+	"rolloutType" : "RANDOM",
+	"information" : "Information_Set",
+	"selectionPolicy" : "SIMPLE",
+	"treePolicy" : "UCB",
+	"opponentTreePolicy" : "SelfOnly",
+	"budget" : 50,
+	"epsilon" : 1e-6,
+	"breakMS" : 0,
+	"exploreEpsilon" : 0.1
+}

@@ -1,7 +1,6 @@
 package games.chinesecheckers.gui;
 
 import core.components.GraphBoard;
-import games.catan.components.Graph;
 import games.chinesecheckers.components.CCNode;
 import games.chinesecheckers.components.Peg;
 import games.chinesecheckers.components.StarBoard;
@@ -54,10 +53,23 @@ public class CCGraphView extends ComponentView implements IScreenHighlight {
         if(peg.getColour() == Peg.Colour.purple){
             return Color.magenta;
         }
-        if(peg.getColour() == Peg.Colour.red){
-            return Color.red.brighter();
+        if(peg.getColour() == Peg.Colour.blue){
+            return Color.blue;
         }
-        return Color.blue;
+        if(peg.getColour() == Peg.Colour.yellow){
+            return Color.yellow;
+        }
+        if(peg.getColour() == Peg.Colour.red){
+            return Color.red;
+        }
+        if(peg.getColour() == Peg.Colour.orange){
+            return Color.orange;
+        }
+        if(peg.getColour() == Peg.Colour.green){
+            return Color.green;
+        }
+
+        return Color.black;
     }
 
     void drawNodes(Graphics g){

@@ -4,7 +4,7 @@ import core.AbstractGameState;
 import core.AbstractParameters;
 import core.CoreConstants;
 import core.interfaces.IStateHeuristic;
-import evaluation.TunableParameters;
+import evaluation.optimisation.TunableParameters;
 import games.chinesecheckers.components.CCNode;
 import games.chinesecheckers.components.Peg;
 import games.connect4.Connect4Heuristic;
