@@ -34,6 +34,14 @@ public class MovePeg extends AbstractAction {
         return true;
     }
 
+    public int getFrom(){
+        return from;
+    }
+
+    public int getTo(){
+        return to;
+    }
+
     @Override
     public AbstractAction copy() {
         return this;

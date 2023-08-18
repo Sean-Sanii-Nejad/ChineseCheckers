@@ -90,6 +90,14 @@ public class CCGameState extends AbstractGameState {
         else if (nPlayers == 3) {
             return Peg.Colour.values()[player * 2];
         }
+        else if (nPlayers == 4) {
+            int[] orderForFourPlayers = {0, 2, 3, 5};
+            return Peg.Colour.values()[orderForFourPlayers[player]];
+        }
+        else if (nPlayers == 6) {
+            int[] orderForFourPlayers = {0, 2, 3, 5};
+            return Peg.Colour.values()[player];
+        }
         else {
             System.err.println("unimplemented number of players");
             return Peg.Colour.values()[player];

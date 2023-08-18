@@ -7,12 +7,12 @@
 
 	"rolloutLength" : 10000,
 	"maxTreeDepth" : 10000,
-	"rolloutType" : "MAST",
+	"rolloutType" : "RANDOM",
 	"information" : "Open_Loop",
 	"selectionPolicy" : "SIMPLE",
 	"treePolicy" : "UCB",
-	"opponentTreePolicy" : "SelfOnly",
-	"budget" : 50,
+	"opponentTreePolicy" : "OneTree",
+	"budget" : 250,
 	"budgetType" : "BUDGET_TIME",
 	"heuristic" : {
 		"class" : "players.heuristics.WinOnlyHeuristic"

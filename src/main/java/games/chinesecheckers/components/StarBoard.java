@@ -30,12 +30,14 @@ public class StarBoard extends Component implements IComponentContainer<CCNode> 
         super(CoreConstants.ComponentType.BOARD);
         boardNodes = new ArrayList<>();
         buildBoard();
+        loadNodeBaseColours();
     }
 
     public StarBoard(String name, int ID) {
         super(CoreConstants.ComponentType.BOARD, name, ID);
         boardNodes = new ArrayList<>();
         buildBoard();
+        loadNodeBaseColours();
     }
 
     /**
@@ -267,14 +269,67 @@ public class StarBoard extends Component implements IComponentContainer<CCNode> 
     public CoreConstants.VisibilityMode getVisibilityMode() {
         return CoreConstants.VisibilityMode.VISIBLE_TO_ALL;
     }
+
+    private void loadNodeBaseColours(){
+        // Load Purple Nodes
+        for(int i = 0; i <= 9; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.purple);
+        }
+        // Load Red Nodes
+        for(int i = 111; i <= 120; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.red);
+        }
+        // Load Green Nodes
+        for(int i = 10; i <= 13; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.green);
+        }
+        for(int i = 23; i <= 25; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.green);
+        }
+        for(int i = 35; i <= 36; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.green);
+        }
+        ((CCNode) this.getBoardNodes().get(46)).setColourNode(Peg.Colour.green);
+        // Load Blue Nodes
+        for(int i = 19; i <= 22; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.blue);
+        }
+        for(int i = 32; i <= 34; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.blue);
+        }
+        for(int i = 44; i <= 45; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.blue);
+        }
+        ((CCNode) this.getBoardNodes().get(55)).setColourNode(Peg.Colour.blue);
+        // Load Orange Nodes
+        ((CCNode) this.getBoardNodes().get(65)).setColourNode(Peg.Colour.orange);
+        for(int i = 75; i <= 76; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.orange);
+        }
+        for(int i = 86; i <= 88; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.orange);
+        }
+        for(int i = 98; i <= 101; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.orange);
+        }
+        // Load Yellow Nodes
+        ((CCNode) this.getBoardNodes().get(74)).setColourNode(Peg.Colour.yellow);
+        for(int i = 84; i <= 85; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.yellow);
+        }
+        for(int i = 95; i <= 97; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.yellow);
+        }
+        for(int i = 107; i <= 110; i++){
+            ((CCNode) this.getBoardNodes().get(i)).setColourNode(Peg.Colour.yellow);
+        }
+    }
     
     public void buildBoard(){
         for(int i = 0; i < 121; i++) {this.getBoardNodes().add(new CCNode(i));}
         (this.getBoardNodes().get(0)).setCoordinates(6, 0);
         this.getBoardNodes().get(0).addNeighbour(this.getBoardNodes().get(1),3);
         this.getBoardNodes().get(0).addNeighbour(this.getBoardNodes().get(2),2);
-
-        //System.out.println(this.getBoardNodes().get(0).getNeighbourSideMapping().get(this.getBoardNodes().get(1)).intValue());
 
         ((CCNode)this.getBoardNodes().get(1)).setCoordinates(5, 1);
         this.getBoardNodes().get(1).addNeighbour(this.getBoardNodes().get(3), 3);

@@ -9,15 +9,23 @@ import evaluation.listeners.IGameListener;
 import evaluation.metrics.Event;
 import evaluation.summarisers.TAGNumericStatSummary;
 import games.GameType;
+import games.chinesecheckers.CCHeuristic;
 import gui.AbstractGUIManager;
 import gui.GUI;
 import gui.GamePanel;
 import players.PlayerConstants;
+import players.heuristics.PureScoreHeuristic;
+import players.heuristics.WinOnlyHeuristic;
 import players.human.ActionController;
 import players.human.HumanConsolePlayer;
 import players.human.HumanGUIPlayer;
+import players.mcts.MCTSEnums;
 import players.mcts.MCTSParams;
 import players.mcts.MCTSPlayer;
+import players.rhea.RHEAPlayer;
+import players.rmhc.RMHCParams;
+import players.rmhc.RMHCPlayer;
+import players.simple.OSLAPlayer;
 import players.simple.RandomPlayer;
 import utilities.Pair;
 import utilities.Utils;
@@ -810,28 +818,108 @@ public class Game {
         ArrayList<AbstractPlayer> players = new ArrayList<>();
 
         MCTSParams params = new MCTSParams();
+        MCTSParams params2 = new MCTSParams();
+        MCTSParams params3 = new MCTSParams();
 
-        params.budget = 100;
-       // params.budgetType = PlayerConstants.BUDGET_TIME;
 
-//        players.add(new HumanConsolePlayer());
+
+        params.K = 1.0;
+        params.rolloutLength = 10000;
+        params.maxTreeDepth = 10000;
+        params.rolloutType = MCTSEnums.Strategies.MAST;
+        params.selectionPolicy = MCTSEnums.SelectionPolicy.SIMPLE;
+        params.treePolicy = MCTSEnums.TreePolicy.UCB;
+        params.opponentTreePolicy = MCTSEnums.OpponentTreePolicy.OMA;
+        params.budget = 250;
+        params.budgetType = PlayerConstants.BUDGET_TIME;
+        params.epsilon = 1e-6;
+        params.breakMS = 0;
+        params.exploreEpsilon = 0.1;
+        params.heuristic = new WinOnlyHeuristic();
+        params.information = MCTSEnums.Information.Closed_Loop;
+
+        params2.K = 1.0;
+        params2.rolloutLength = 10000;
+        params2.maxTreeDepth = 10000;
+        params2.rolloutType = MCTSEnums.Strategies.MAST;
+        params2.selectionPolicy = MCTSEnums.SelectionPolicy.SIMPLE;
+        params2.treePolicy = MCTSEnums.TreePolicy.UCB;
+        params2.opponentTreePolicy = MCTSEnums.OpponentTreePolicy.SelfOnly;
+        params2.budget = 250;
+        params2.budgetType = PlayerConstants.BUDGET_TIME;
+        params2.epsilon = 1e-6;
+        params2.breakMS = 0;
+        params2.exploreEpsilon = 0.1;
+        params2.heuristic = new WinOnlyHeuristic();
+        params2.information = MCTSEnums.Information.Closed_Loop;
+
+        //params.rolloutType = MCTSEnums.Strategies.MAST
+
+
+
+//        players.add(new MCTSPlayer(params));
+//        players.add(new MCTSPlayer(params2));
+////        players.add(new MCTSPlayer(params2));
+////        players.add(new OSLAPlayer());
+//
+////        players.add(new RandomPlayer());
+////        players.add(new RandomPlayer());
+//        players.add(new RandomPlayer());
+
+        //        "class" : "players.mcts.MCTSParams",
+//                "K" : 1.0,
+//                "rolloutLength" : 300,
+//                "maxTreeDepth" : 1000,
+//                "rolloutType" : "MAST",
+//                "information" : "Closed_Loop",
+//                "selectionPolicy" : "SIMPLE",
+//                "treePolicy" : "UCB",
+//                "opponentTreePolicy" : "SelfOnly",
+//                "budget" : 50,
+//                "budgetType" : "BUDGET_TIME",
+//                "epsilon" : 1e-6,
+//                "breakMS" : 0,
+//                "exploreEpsilon" : 0.1
+//
+//
+
+
+
+
+
+
+
+//        players.add(new MCTSPlayer(params));
+//        players.add(new MCTSPlayer(params));
+
+//        players.add(new RandomPlayer());
+//        players.add(new RandomPlayer());
+//        players.add(new RandomPlayer());
+//        players.add(new RandomPlayer());
+
+
+
+        players.add(new HumanGUIPlayer(new ActionController()));
+        players.add(new HumanConsolePlayer());
 //        players.add(new HumanConsolePlayer());
 //        players.add(new HumanConsolePlayer());
 //        players.add(new RandomPlayer());
 //        players.add(new RandomPlayer());
+
 //        players.add(new RandomPlayer());
-//        players.add(new MCTSPlayer());
+//        players.add(new RandomPlayer());
+
 //        players.add(new MCTSPlayer());
 //        players.add(new MCTSPlayer());
 
 //        MCTSParams params = new MCTSParams();
 //        players.add(new MCTSPlayer(params));
 
-//        players.add(new OSLAPlayer());
-//        players.add(new RMHCPlayer());
-        players.add(new HumanGUIPlayer(ac));
-        players.add(new HumanGUIPlayer(ac));
-        players.add(new HumanGUIPlayer(ac));
+
+
+//        players.add(new HumanGUIPlayer(ac));
+//        players.add(new HumanGUIPlayer(ac));
+//        players.add(new HumanGUIPlayer(ac));
 //        players.add(new HumanConsolePlayer());
 //        players.add(new FirstActionPlayer());
 
