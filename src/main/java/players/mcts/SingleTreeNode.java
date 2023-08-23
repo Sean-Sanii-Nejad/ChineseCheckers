@@ -3,6 +3,8 @@ package players.mcts;
 import core.*;
 import core.actions.AbstractAction;
 import core.interfaces.IStateHeuristic;
+import games.chinesecheckers.CCGameState;
+import games.chinesecheckers.actions.MovePeg;
 import players.PlayerConstants;
 import utilities.*;
 
@@ -527,8 +529,15 @@ public class SingleTreeNode {
             //       AbstractGameState preGS = gs.copy();
             AbstractPlayer oppModel = opponentModels[gs.getCurrentPlayer()];
             List<AbstractAction> availableActions = forwardModel.computeAvailableActions(gs, params.actionSpace);
-            if (availableActions.isEmpty())
+            if (availableActions.isEmpty()){
+
+
+
                 throw new AssertionError("Should always have at least one action possible..." + (action != null? " Last action: " + action : ""));
+            }
+
+
+
             action = oppModel.getAction(gs, availableActions);
             if (inRollout) {
                 rolloutDepth++;

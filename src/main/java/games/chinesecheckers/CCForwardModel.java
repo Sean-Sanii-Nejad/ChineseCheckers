@@ -44,9 +44,9 @@ public class CCForwardModel extends StandardForwardModel {
 
         state.starBoard = new StarBoard();
 
-        testing(state);
         if (state.getNPlayers() == 2) {
-            //loadPegs2Player(state);
+            //testing(state);
+            loadPegs2Player(state);
         }
         if (state.getNPlayers() == 3) {
             loadPegs3Player(state);
@@ -86,7 +86,7 @@ public class CCForwardModel extends StandardForwardModel {
                 col == Peg.Colour.neutral;
     }
 
-    private void loadPlayerActions(int player, CCGameState state, List<AbstractAction> actions){
+    private void loadPlayerActions(int player, CCGameState state, List<AbstractAction> actions) {
         // Player Purple
         //player index to colour
         Peg.Colour playerCol = state.getPlayerColour(player);
@@ -95,8 +95,31 @@ public class CCForwardModel extends StandardForwardModel {
                 exploreNodeAction(node, actions, state);
             }
         }
-
     }
+    private static void exploreNodeAction(CCNode node, List<AbstractAction> actions, CCGameState state) {
+        Peg.Colour playerCol = node.getOccupiedPeg().getColour();
+        for (CCNode nei_0: node.getNeighbours()) {
+            if (nei_0.isNodeOccupied()) {
+                repeatAction(node, actions, playerCol, state);
+            }
+            else if (isPlayingColour(nei_0.getBaseColour(), state)) {
+                if (node.getOccupiedPeg().getInDestination() == true) {
+                    if (nei_0.getBaseColour() != Peg.Colour.neutral) {
+                        MovePeg action = new MovePeg(node.getID(), nei_0.getID());
+                        if(!actions.contains(action)){
+                            actions.add(action);
+                        }
+                    }
+                } else {
+                    MovePeg action = new MovePeg(node.getID(), nei_0.getID());
+                    if(!actions.contains(action)){
+                        actions.add(action);
+                    }
+                }
+            }
+        }
+    }
+
     private static void repeatAction(CCNode node, List<AbstractAction> actions, Peg.Colour playerCol, CCGameState state) {
         HashSet<CCNode> visited = new HashSet<CCNode>();
         HashSet<CCNode> toVisit = new HashSet<CCNode>();
@@ -130,30 +153,6 @@ public class CCForwardModel extends StandardForwardModel {
         }
     }
 
-    private static void exploreNodeAction(CCNode node, List<AbstractAction> actions, CCGameState state) {
-        Peg.Colour playerCol = node.getOccupiedPeg().getColour();
-        for (CCNode nei_0: node.getNeighbours()) {
-            if (nei_0.isNodeOccupied()) {
-                repeatAction(node, actions, playerCol, state);
-            }
-            else if (isPlayingColour(nei_0.getBaseColour(), state)) {
-                if (node.getOccupiedPeg().getInDestination() == true) {
-                    if (nei_0.getBaseColour() != Peg.Colour.neutral) {
-                        MovePeg action = new MovePeg(node.getID(), nei_0.getID());
-                        if(!actions.contains(action)){
-                            actions.add(action);
-                        }
-                    }
-                } else {
-                    MovePeg action = new MovePeg(node.getID(), nei_0.getID());
-                    if(!actions.contains(action)){
-                        actions.add(action);
-                    }
-                }
-            }
-        }
-    }
-
     @Override
     protected void endGame(AbstractGameState gs) {
 //        CCGameState state = (CCGameState) gs;
@@ -173,6 +172,12 @@ public class CCForwardModel extends StandardForwardModel {
                 // Check if purple is in red base
                 if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().getColour() == Peg.Colour.purple){
                     if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getBaseColour() == Peg.Colour.red){
+                        ((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().setInDestination(true);
+                    }
+                }
+                // Check if blue is in red base
+                if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().getColour() == Peg.Colour.blue){
+                    if(((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getBaseColour() == Peg.Colour.orange){
                         ((CCGameState) currentState).getStarBoard().getBoardNodes().get(i).getOccupiedPeg().setInDestination(true);
                     }
                 }
@@ -235,6 +240,20 @@ public class CCForwardModel extends StandardForwardModel {
                     break;
             }
         }
+        if (checkWinConditionBlue((CCGameState) state)) {
+            int nPlayers = state.getNPlayers();
+            switch (nPlayers) {
+                case 6:
+                    state.setGameStatus(CoreConstants.GameResult.GAME_END);
+                    state.setPlayerResult(WIN_GAME, 1);
+                    state.setPlayerResult(LOSE_GAME, 0);
+                    state.setPlayerResult(LOSE_GAME, 2);
+                    state.setPlayerResult(LOSE_GAME, 3);
+                    state.setPlayerResult(LOSE_GAME, 4);
+                    state.setPlayerResult(LOSE_GAME, 5);
+                    break;
+            }
+        }
         if (checkWinConditionYellow((CCGameState) state)) {
             int nPlayers = state.getNPlayers();
             switch (nPlayers) {
@@ -280,10 +299,10 @@ public class CCForwardModel extends StandardForwardModel {
                     break;
                 case 6:
                     state.setGameStatus(CoreConstants.GameResult.GAME_END);
-                    state.setPlayerResult(WIN_GAME, 0);
+                    state.setPlayerResult(WIN_GAME, 3);
+                    state.setPlayerResult(LOSE_GAME, 0);
                     state.setPlayerResult(LOSE_GAME, 1);
                     state.setPlayerResult(LOSE_GAME, 2);
-                    state.setPlayerResult(LOSE_GAME, 3);
                     state.setPlayerResult(LOSE_GAME, 4);
                     state.setPlayerResult(LOSE_GAME, 5);
             }
@@ -300,6 +319,8 @@ public class CCForwardModel extends StandardForwardModel {
                     break;
                 case 6:
                     int[] playersToSetFor6 = {0, 1, 2, 3, 5};
+                    state.setGameStatus(CoreConstants.GameResult.GAME_END);
+                    state.setPlayerResult(WIN_GAME, 4);
                     for (int player : playersToSetFor6) {
                         state.setPlayerResult(LOSE_GAME, player);
                     }
@@ -317,7 +338,9 @@ public class CCForwardModel extends StandardForwardModel {
                     state.setPlayerResult(LOSE_GAME, 2);
                     break;
                 case 6:
-                    int[] playersToSetFor6 = {0, 1, 2, 3, 5};
+                    int[] playersToSetFor6 = {0, 1, 2, 3, 4};
+                    state.setGameStatus(CoreConstants.GameResult.GAME_END);
+                    state.setPlayerResult(WIN_GAME, 5);
                     for (int player : playersToSetFor6) {
                         state.setPlayerResult(LOSE_GAME, player);
                     }
@@ -339,7 +362,26 @@ public class CCForwardModel extends StandardForwardModel {
                 counter++;
             }
         }
-        if(counter >= 5 && PegIn){
+        if(counter >= 10 && PegIn){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkWinConditionBlue(CCGameState state) {
+        int counter = 0;
+        boolean PegIn = false;
+        List<CCNode> nodes = state.getStarBoard().getBoardNodes();
+        int[] indices = {65, 75, 76, 86, 87, 88, 98, 99, 100, 101};
+        for (int i : indices) {
+            if (nodes.get(i).isNodeOccupied()) {
+                if (nodes.get(i).getOccupiedPeg().getColour() == Peg.Colour.blue) {
+                    PegIn = true;
+                }
+                counter++;
+            }
+        }
+        if(counter >= 10 && PegIn){
             return true;
         }
         return false;
@@ -376,7 +418,7 @@ public class CCForwardModel extends StandardForwardModel {
                 counter++;
             }
         }
-        if(counter >= 5 && PegIn){
+        if(counter >= 10 && PegIn){
             return true;
         }
         return false;
@@ -395,7 +437,7 @@ public class CCForwardModel extends StandardForwardModel {
                 counter++;
             }
         }
-        if(counter >= 5 && PegIn){
+        if(counter >= 10 && PegIn){
             return true;
         }
         return false;
@@ -512,14 +554,14 @@ public class CCForwardModel extends StandardForwardModel {
     }
 
     public void testing(CCGameState state){
-        ((CCNode) state.starBoard.getBoardNodes().get(61)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(61)));
-        ((CCNode) state.starBoard.getBoardNodes().get(89)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(89)));
-        ((CCNode) state.starBoard.getBoardNodes().get(59)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(59)));
-        ((CCNode) state.starBoard.getBoardNodes().get(57)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(57)));
-        ((CCNode) state.starBoard.getBoardNodes().get(63)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(63)));
-        ((CCNode) state.starBoard.getBoardNodes().get(66)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(66)));
-        ((CCNode) state.starBoard.getBoardNodes().get(54)).setOccupiedPeg(new Peg(Peg.Colour.red, (CCNode)state.starBoard.getBoardNodes().get(54)));
-        ((CCNode) state.starBoard.getBoardNodes().get(60)).setOccupiedPeg(new Peg(Peg.Colour.purple, (CCNode)state.starBoard.getBoardNodes().get(54)));
+        loadPegsPurple(state);
+        loadPegsBlue(state);
+        loadPegsYellow(state);
+        loadPegsRed(state);
+        loadPegsOrange(state);
+        loadPegsGreen(state);
+
+
 //
 //        ((CCNode) state.starBoard.getBoardNodes().get(27)).setOccupiedPeg(new Peg(Peg.Colour.yellow, (CCNode)state.starBoard.getBoardNodes().get(27)));
 //        ((CCNode) state.starBoard.getBoardNodes().get(26)).setOccupiedPeg(new Peg(Peg.Colour.yellow, (CCNode)state.starBoard.getBoardNodes().get(26)));

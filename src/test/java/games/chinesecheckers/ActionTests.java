@@ -1,4 +1,4 @@
-package test.games.chinesecheckers;
+package games.chinesecheckers;
 
 import core.Game;
 import games.GameType;
@@ -17,72 +17,23 @@ import static org.junit.Assert.*;
 
 public class ActionTests {
     CCForwardModel fm = new CCForwardModel();
-    Game game = GameType.ChineseCheckers.createGameInstance(4, new CCParameters(3));
+    Game game = GameType.ChineseCheckers.createGameInstance(2, new CCParameters(0));
     CCGameState state = (CCGameState) game.getGameState();
 
-//    @Test
-//    public void movingPegFunctionality(){
-//        CCGameState state = (CCGameState) game.getGameState();
-//        MovePeg movePeg = new MovePeg(((CCNode) state.getStarBoard().getBoardNodes().get(6)), ((CCNode) state.getStarBoard().getBoardNodes().get(15)));
-//
-//        fm.computeAvailableActions(state);
-//        fm.next(state, movePeg);
-//    }
-
     @Test
-    public void startPegLocations(){
-//        CCGameState state = (CCGameState) game.getGameState();
-//        // PurplePlayer
-//        for(int i = 0; i < state.PLAYER_PEGS; i++) {
-//            assertEquals(Peg.Colour.purple,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        // Red Player
-//        for(int i = 111; i < state.PLAYER_PEGS; i++) {
-//            assertEquals(Peg.Colour.red,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        // Green Player
-//        for(int i = 10; i <= 13; i++){
-//            assertEquals(Peg.Colour.green,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 23; i <= 25; i++){
-//            assertEquals(Peg.Colour.green,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 35; i <= 36; i++){
-//            assertEquals(Peg.Colour.green,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        assertEquals(Peg.Colour.green,((CCNode)state.getStarBoard().getBoardNodes().get(46)).getOccupiedPeg().getColour());
-//        // Orange Player
-//        assertEquals(Peg.Colour.orange,((CCNode)state.getStarBoard().getBoardNodes().get(65)).getOccupiedPeg().getColour());
-//        for(int i = 75; i <= 76; i++){
-//            assertEquals(Peg.Colour.orange,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 86; i <= 88; i++){
-//            assertEquals(Peg.Colour.orange,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 98; i <= 101; i++){
-//            assertEquals(Peg.Colour.orange,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        // Yellow Player
-//        assertEquals(Peg.Colour.yellow,((CCNode)state.getStarBoard().getBoardNodes().get(74)).getOccupiedPeg().getColour());
-//        for(int i = 84; i <= 85; i++){
-//            assertEquals(Peg.Colour.yellow,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 93; i <= 97; i++){
-//            assertEquals(Peg.Colour.yellow,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 107; i <= 110; i++){
-//            assertEquals(Peg.Colour.yellow,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        // Blue Player
-//        for(int i = 19; i <= 22; i++){
-//            assertEquals(Peg.Colour.blue,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 32; i <= 34; i++){
-//            assertEquals(Peg.Colour.blue,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        for(int i = 44; i <= 45; i++){
-//            assertEquals(Peg.Colour.blue,((CCNode)state.getStarBoard().getBoardNodes().get(i)).getOccupiedPeg().getColour());
-//        }
-//        assertEquals(Peg.Colour.blue,((CCNode)state.getStarBoard().getBoardNodes().get(55)).getOccupiedPeg().getColour());
+    public void movePegTest(){
+        CCGameState state = (CCGameState) game.getGameState();
+        MovePeg movePeg = new MovePeg(6, 14);
+        MovePeg movePeg_ = new MovePeg(14, 90);
+
+        fm.computeAvailableActions(state);
+        fm.next(state, movePeg);
+        assertEquals("Expected a purple peg at position 14", "purple", state.getStarBoard().getBoardNodes().get(14).getOccupiedPeg().getColour().name());
+        assertFalse("Expected position 6 to be empty", state.getStarBoard().getBoardNodes().get(6).isNodeOccupied());
+
+        fm.computeAvailableActions(state);
+        fm.next(state, movePeg_);
+        assertEquals("Expected a purple peg at position 90", "purple", state.getStarBoard().getBoardNodes().get(90).getOccupiedPeg().getColour().name());
+        assertFalse("Expected position 14 to be empty", state.getStarBoard().getBoardNodes().get(14).isNodeOccupied());
     }
 }

@@ -1,8 +1,8 @@
 {
   "game": "ChineseCheckers",
   "selfPlay": false,
-  "playerDirectory" : "json/players/cc3Players",
-  "nPlayers": 3,
-  "matchups": 16,
+  "playerDirectory" : "json/players/ccPlayersRandom",
+  "nPlayers": 2,
+  "matchups": 10,
   "listener": "metrics/chinesecheckers.json"
 }
