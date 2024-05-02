@@ -1,3 +1,9 @@
+# My Contributions Directory -> src/main/java/games/chinesecheckers
+
+<br>
+<br>
+<br>
+
 # TAG: [Tabletop Games Framework](http://www.tabletopgames.ai/)
 
 [![license](https://img.shields.io/github/license/GAIGResearch/TabletopGames)](LICENSE)
